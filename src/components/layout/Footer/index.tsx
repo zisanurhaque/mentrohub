@@ -1,146 +1,242 @@
 import React from "react";
 import Link from "next/link";
-import { ShieldCheck, Heart, Sparkles, BookOpen, GraduationCap } from "lucide-react";
+import { Globe, ChevronDown } from "lucide-react";
 
 export default function Footer() {
   return (
-    <footer className="bg-[#0b0b0d] border-t border-[#1f1f26] text-gray-400 text-xs">
-      {/* Top Banner Notice */}
-      <div className="bg-[#121217] border-b border-[#1b1b22] py-4">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-gray-300 font-medium flex items-center justify-center flex-wrap gap-1.5">
-            <Sparkles size={14} className="text-[#ff9900]" />
-            <span className="font-bold text-white">Your Search History Is About To Get Smarter.</span>
-            <span>Over 25,000,000 minutes of pure, consensual mathematics, coding, and science explained.</span>
-          </p>
-        </div>
-      </div>
+    <footer className="bg-[#0a0a0a] border-t border-[#1a1a1a] text-xs text-gray-400 pt-12 pb-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+        {/* Top Disclaimer Paragraph (Exact Match to Screenshot 1) */}
+        <p className="text-[#888888] text-[11px] sm:text-xs max-w-4xl mx-auto text-center leading-relaxed">
+          MentroHub provides you with unlimited free educational videos with the hottest professors.
+          Enjoy the largest amateur intellectual community on the net as well as full-length lectures
+          from the top Ivy League studios. We update our educational videos daily to ensure you always
+          get the best quality brain food.
+        </p>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
-          {/* Brand Col */}
-          <div className="md:col-span-2 space-y-3 pr-4">
-            <Link href="/" className="flex items-center">
-              <span className="text-2xl font-black text-white">Mentro</span>
-              <span className="bg-[#ff9900] text-black font-black text-base px-2 py-0.5 rounded ml-1 tracking-wider uppercase">
-                HUB
-              </span>
-            </Link>
-            <p className="text-xs text-gray-400 leading-relaxed">
-              MentroHub is the world&apos;s premier educational entertainment platform.
-              Combining the visual familiarity of the web&apos;s most addictive layouts
-              with completely legitimate, world-class educational lectures from 3Blue1Brown,
-              freeCodeCamp, Harvard CS50, and Veritasium.
-            </p>
-            <div className="flex items-center space-x-2 text-[11px] text-[#ff9900] font-semibold bg-[#16161c] p-2 rounded border border-[#23232c] w-fit">
-              <ShieldCheck size={14} />
-              <span>100% Pure Knowledge • SFW Certified • Zero Regrets</span>
+        {/* 4 Footer Columns with Orange Links (Exact Match to Screenshot 1) */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-5xl mx-auto pt-2">
+          {/* Col 1: Information */}
+          <div className="space-y-3">
+            <h4 className="text-sm font-bold text-[#e0e0e0]">Information</h4>
+            <ul className="space-y-2 text-xs">
+              <li>
+                <Link href="/sitemap.xml" className="text-[#ff9900] hover:underline">
+                  Sitemap
+                </Link>
+              </li>
+              <li>
+                <Link href="/terms" className="text-[#ff9900] hover:underline">
+                  Terms & Conditions
+                </Link>
+              </li>
+              <li>
+                <Link href="/privacy" className="text-[#ff9900] hover:underline">
+                  Privacy Notice
+                </Link>
+              </li>
+              <li>
+                <Link href="/dmca" className="text-[#ff9900] hover:underline">
+                  DMCA Fair Use
+                </Link>
+              </li>
+              <li>
+                <Link href="/2257" className="text-[#ff9900] hover:underline">
+                  2257 Educational Exemption
+                </Link>
+              </li>
+              <li>
+                <span className="text-[#ff9900] hover:underline cursor-pointer">
+                  EU DSA
+                </span>
+              </li>
+              <li>
+                <span className="text-[#ff9900] hover:underline cursor-pointer">
+                  Recommender System Guidelines
+                </span>
+              </li>
+              <li>
+                <span className="text-[#ff9900] hover:underline cursor-pointer">
+                  Cookie Notice
+                </span>
+              </li>
+              <li>
+                <span className="text-[#ff9900] hover:underline cursor-pointer">
+                  Accessibility
+                </span>
+              </li>
+              <li>
+                <span className="text-[#ff9900] hover:underline cursor-pointer">
+                  Notice to Law Enforcement
+                </span>
+              </li>
+            </ul>
+          </div>
+
+          {/* Col 2: Work With Us */}
+          <div className="space-y-3">
+            <h4 className="text-sm font-bold text-[#e0e0e0]">Work With Us</h4>
+            <ul className="space-y-2 text-xs">
+              <li>
+                <Link href="/partners" className="text-[#ff9900] hover:underline">
+                  Content Partners
+                </Link>
+              </li>
+              <li>
+                <Link href="/advertise" className="text-[#ff9900] hover:underline">
+                  Advertise
+                </Link>
+              </li>
+              <li>
+                <Link href="/webmasters" className="text-[#ff9900] hover:underline">
+                  Webmasters
+                </Link>
+              </li>
+              <li>
+                <Link href="/educator-program" className="text-[#ff9900] hover:underline">
+                  Professor & Educator Program
+                </Link>
+              </li>
+              <li>
+                <Link href="/press" className="text-[#ff9900] hover:underline">
+                  Press
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Col 3: Support and Help */}
+          <div className="space-y-3">
+            <h4 className="text-sm font-bold text-[#e0e0e0]">Support and Help</h4>
+            <ul className="space-y-2 text-xs">
+              <li>
+                <Link href="/support" className="text-[#ff9900] hover:underline">
+                  Content Removal
+                </Link>
+              </li>
+              <li>
+                <Link href="/contact" className="text-[#ff9900] hover:underline">
+                  Contact Support
+                </Link>
+              </li>
+              <li>
+                <Link href="/faq" className="text-[#ff9900] hover:underline">
+                  FAQ
+                </Link>
+              </li>
+              <li>
+                <Link href="/trust-safety" className="text-[#ff9900] hover:underline">
+                  Trust and Academic Safety
+                </Link>
+              </li>
+              <li>
+                <Link href="/parental-controls" className="text-[#ff9900] hover:underline">
+                  Parental Controls
+                </Link>
+              </li>
+              <li>
+                <span className="text-[#ff9900] hover:underline cursor-pointer">
+                  Manage Cookies
+                </span>
+              </li>
+            </ul>
+          </div>
+
+          {/* Col 4: Discover */}
+          <div className="space-y-3">
+            <h4 className="text-sm font-bold text-[#e0e0e0]">Discover</h4>
+            <ul className="space-y-2 text-xs">
+              <li>
+                <Link href="/blog" className="text-[#ff9900] hover:underline">
+                  MentroHub Blog
+                </Link>
+              </li>
+              <li>
+                <Link href="/insights" className="text-[#ff9900] hover:underline">
+                  Insights Blog
+                </Link>
+              </li>
+              <li>
+                <Link href="/wellness" className="text-[#ff9900] hover:underline">
+                  Intellectual Wellness Center
+                </Link>
+              </li>
+              <li>
+                <Link href="/mobile" className="text-[#ff9900] hover:underline">
+                  Mobile
+                </Link>
+              </li>
+              <li>
+                <Link href="/a11y/visual" className="text-[#ff9900] hover:underline">
+                  Visually Impaired
+                </Link>
+              </li>
+              <li>
+                <Link href="/a11y/audio" className="text-[#ff9900] hover:underline">
+                  Audio Impaired
+                </Link>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Language Selector Row (Exact Match to Screenshot 1) */}
+        <div className="max-w-5xl mx-auto flex items-center space-x-2 text-xs pt-4">
+          <span className="text-gray-400 font-semibold">Language:</span>
+          <button
+            type="button"
+            className="flex items-center space-x-1.5 bg-[#1f1f1f] hover:bg-[#282828] text-white px-3 py-1.5 rounded-sm border border-[#2b2b2b] transition-colors"
+          >
+            <Globe size={13} className="text-gray-400" />
+            <span className="font-bold text-xs">English</span>
+            <ChevronDown size={12} className="text-gray-400 ml-1" />
+          </button>
+        </div>
+
+        {/* Bottom Bar: Social Icons, Copyright, RTE Badge & Notice to Users */}
+        <div className="max-w-5xl mx-auto pt-6 border-t border-[#1a1a1a] flex flex-col sm:flex-row items-center justify-between gap-4">
+          {/* Social Icons (X and Discord) */}
+          <div className="flex items-center space-x-3">
+            <a
+              href="https://x.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-8 h-8 rounded-full bg-[#1e1e1e] hover:bg-[#ff9900] hover:text-black text-gray-300 flex items-center justify-center font-bold text-xs transition-colors"
+              title="X / Twitter"
+            >
+              𝕏
+            </a>
+            <a
+              href="https://discord.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-8 h-8 rounded-full bg-[#1e1e1e] hover:bg-[#ff9900] hover:text-black text-gray-300 flex items-center justify-center font-bold text-xs transition-colors"
+              title="Discord"
+            >
+              💬
+            </a>
+          </div>
+
+          {/* Copyright */}
+          <div className="text-center sm:text-right text-[#777777] text-xs">
+            © MentroHub.com, 2026
+          </div>
+
+          {/* Badges & Notice to Users button (Exact Match to Screenshot 1) */}
+          <div className="flex items-center space-x-4">
+            {/* Parody RTA Badge */}
+            <div className="border border-white/20 px-2 py-0.5 rounded-sm font-black text-xs text-white tracking-widest bg-black">
+              RTE®
             </div>
-          </div>
 
-          {/* Quick Links */}
-          <div className="space-y-2">
-            <h4 className="text-xs font-bold text-white uppercase tracking-wider border-b border-[#22222b] pb-1.5 flex items-center">
-              <BookOpen size={13} className="mr-1 text-[#ff9900]" />
-              Hot Categories
-            </h4>
-            <ul className="space-y-1.5 pt-1">
-              <li>
-                <Link href="/categories/programming" className="hover:text-[#ff9900] transition-colors">
-                  Hardcore Coding
-                </Link>
-              </li>
-              <li>
-                <Link href="/categories/artificial-intelligence" className="hover:text-[#ff9900] transition-colors">
-                  AI & Neural Nets
-                </Link>
-              </li>
-              <li>
-                <Link href="/categories/mathematics" className="hover:text-[#ff9900] transition-colors">
-                  Sensual Calculus
-                </Link>
-              </li>
-              <li>
-                <Link href="/categories/finance" className="hover:text-[#ff9900] transition-colors">
-                  High Finance 101
-                </Link>
-              </li>
-              <li>
-                <Link href="/categories/productivity" className="hover:text-[#ff9900] transition-colors">
-                  Spreadsheet Wizardry
-                </Link>
-              </li>
-            </ul>
+            {/* Notice to Users Button */}
+            <Link
+              href="/notice"
+              className="bg-[#ff9900] hover:bg-[#e68a00] text-black font-extrabold text-xs px-4 py-2 rounded-sm transition-colors text-center"
+            >
+              Notice to Users
+            </Link>
           </div>
-
-          {/* Collections */}
-          <div className="space-y-2">
-            <h4 className="text-xs font-bold text-white uppercase tracking-wider border-b border-[#22222b] pb-1.5 flex items-center">
-              <GraduationCap size={13} className="mr-1 text-[#ff9900]" />
-              Collections
-            </h4>
-            <ul className="space-y-1.5 pt-1">
-              <li>
-                <Link href="/collections/learn-python-from-scratch" className="hover:text-[#ff9900] transition-colors">
-                  Python From Scratch
-                </Link>
-              </li>
-              <li>
-                <Link href="/collections/full-stack-web-mastery" className="hover:text-[#ff9900] transition-colors">
-                  Full-Stack Mastery
-                </Link>
-              </li>
-              <li>
-                <Link href="/collections/mathematics-made-simple" className="hover:text-[#ff9900] transition-colors">
-                  Visual Mathematics
-                </Link>
-              </li>
-              <li>
-                <Link href="/collections/introduction-to-artificial-intelligence" className="hover:text-[#ff9900] transition-colors">
-                  Bare Metal GPTs
-                </Link>
-              </li>
-              <li>
-                <Link href="/collections/understanding-personal-finance" className="hover:text-[#ff9900] transition-colors">
-                  Financial Freedom
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Legal / Humor Notice */}
-          <div className="space-y-2">
-            <h4 className="text-xs font-bold text-white uppercase tracking-wider border-b border-[#22222b] pb-1.5">
-              Legal & Disclaimers
-            </h4>
-            <ul className="space-y-1.5 pt-1 text-[11px]">
-              <li>
-                <span className="text-gray-300">Terms of Learning</span>
-              </li>
-              <li>
-                <span className="text-gray-300">Privacy & Cookie History</span>
-              </li>
-              <li>
-                <span className="text-gray-300">Section 2257 (Brain Food Only)</span>
-              </li>
-              <li>
-                <span className="text-gray-300">DMCA & Fair Use YouTube Embeds</span>
-              </li>
-              <li>
-                <Link href="/dashboard" className="text-[#ff9900] hover:underline">
-                  My Learning Dashboard
-                </Link>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        {/* Bottom Bar */}
-        <div className="mt-8 pt-6 border-t border-[#1a1a20] flex flex-col sm:flex-row items-center justify-between text-[11px] text-gray-500 gap-3">
-          <p>© 2025 MentroHub LLC. Unlimited Knowledge. Zero Regrets.</p>
-          <p className="flex items-center">
-            Made with <Heart size={11} className="mx-1 text-[#ff9900] fill-[#ff9900]" /> for consenting lifelong learners worldwide.
-          </p>
         </div>
       </div>
     </footer>

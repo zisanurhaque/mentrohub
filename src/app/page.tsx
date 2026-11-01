@@ -4,8 +4,10 @@ import HomepageLayout from "@/components/layout/HomepageLayout";
 import Container from "@/components/layout/Container";
 import Banner from "@/components/pages/Home/Banner";
 import VideoCard from "@/components/cards/VideoCard";
+import PromoCard from "@/components/cards/PromoCard";
 import CategoryCard from "@/components/cards/CategoryCard";
 import CollectionCard from "@/components/cards/CollectionCard";
+import Pagination from "@/components/layout/Pagination";
 import { getCategories, getCollections, getVideos } from "@/lib/db";
 import {
   Flame,
@@ -16,7 +18,7 @@ import {
   FolderTree,
 } from "lucide-react";
 
-export const revalidate = 60; // ISR cache 60s
+export const revalidate = 60;
 
 export default async function HomePage() {
   const [trendingData, mostWatchedData, recentData, categories, collections] =
@@ -30,11 +32,11 @@ export default async function HomePage() {
 
   return (
     <HomepageLayout>
-      {/* Hero Section */}
+      {/* Hero Exploration Banner */}
       <Banner />
 
-      <Container className="py-10 space-y-12">
-        {/* Section 1: Trending Lessons */}
+      <Container className="py-8 space-y-12">
+        {/* Section 1: Main Video Discovery Grid (Exact Match to Screenshot 2 & 3) */}
         <section className="space-y-4">
           <div className="flex items-center justify-between border-b border-[#22222a] pb-3">
             <div className="flex items-center space-x-2">
@@ -59,11 +61,26 @@ export default async function HomePage() {
             </Link>
           </div>
 
+          {/* Grid matching Screenshot 2 & 3: 3 videos + 1 Promo Card, then 4 videos */}
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {trendingData.videos.map((video) => (
+            {trendingData.videos.slice(0, 3).map((video) => (
+              <VideoCard key={video.id} video={video} />
+            ))}
+            {/* Parody Educational Promo Card in 4th slot */}
+            <PromoCard />
+
+            {/* Next 4 videos */}
+            {trendingData.videos.slice(3, 7).map((video) => (
               <VideoCard key={video.id} video={video} />
             ))}
           </div>
+
+          {/* Pagination bar matching Screenshot 3 */}
+          <Pagination
+            currentPage={1}
+            totalPages={4}
+            buildPageUrl={(page) => `/search?page=${page}`}
+          />
         </section>
 
         {/* Section 2: Hot Categories */}
@@ -195,8 +212,8 @@ export default async function HomePage() {
         </section>
 
         {/* Humorous Bottom Callout */}
-        <div className="p-8 rounded-xl bg-gradient-to-r from-[#171720] via-[#1f1f2a] to-[#171720] border border-[#2b2b3a] text-center space-y-4 shadow-xl">
-          <span className="bg-[#ff9900] text-black text-xs font-black uppercase px-3 py-1 rounded tracking-wider">
+        <div className="p-8 rounded-sm bg-gradient-to-r from-[#141416] via-[#1c1c20] to-[#141416] border border-[#2b2b34] text-center space-y-4 shadow-xl">
+          <span className="bg-[#ff9900] text-black text-xs font-black uppercase px-3 py-1 rounded-sm tracking-wider">
             Ready to get educated?
           </span>
           <h3 className="text-2xl sm:text-3xl font-black text-white">
@@ -210,13 +227,13 @@ export default async function HomePage() {
           <div className="pt-2 flex items-center justify-center space-x-3">
             <Link
               href="/register"
-              className="bg-[#ff9900] hover:bg-[#e68a00] text-black font-extrabold text-sm px-6 py-2.5 rounded-md transition-colors shadow"
+              className="bg-[#ff9900] hover:bg-[#e68a00] text-black font-extrabold text-xs px-6 py-2.5 rounded-sm transition-colors shadow"
             >
               Create Free Account
             </Link>
             <Link
               href="/search"
-              className="bg-[#262632] hover:bg-[#303040] text-white font-bold text-sm px-5 py-2.5 rounded-md border border-[#333342] transition-colors"
+              className="bg-[#242428] hover:bg-[#2e2e34] text-white font-bold text-xs px-5 py-2.5 rounded-sm border border-[#33333e] transition-colors"
             >
               Browse All Lessons
             </Link>

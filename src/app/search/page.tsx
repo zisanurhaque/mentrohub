@@ -3,6 +3,7 @@ import Link from "next/link";
 import HomepageLayout from "@/components/layout/HomepageLayout";
 import Container from "@/components/layout/Container";
 import VideoCard from "@/components/cards/VideoCard";
+import Pagination from "@/components/layout/Pagination";
 import { getCategories, getVideos } from "@/lib/db";
 import { Search, Filter, SlidersHorizontal, Sparkles, Frown } from "lucide-react";
 
@@ -187,23 +188,15 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
           </div>
         )}
 
-        {/* Pagination */}
+        {/* Pagination matching Screenshot 3 */}
         {result.totalPages > 1 && (
-          <div className="flex items-center justify-center space-x-2 pt-6">
-            {Array.from({ length: result.totalPages }, (_, i) => i + 1).map((p) => (
-              <Link
-                key={p}
-                href={`/search?q=${encodeURIComponent(q)}&category=${encodeURIComponent(category)}&difficulty=${encodeURIComponent(difficulty)}&duration=${duration}&sortBy=${sortBy}&page=${p}`}
-                className={`w-8 h-8 rounded flex items-center justify-center text-xs font-bold transition-colors ${
-                  page === p
-                    ? "bg-[#ff9900] text-black"
-                    : "bg-[#1a1a22] text-gray-300 hover:bg-[#252530]"
-                }`}
-              >
-                {p}
-              </Link>
-            ))}
-          </div>
+          <Pagination
+            currentPage={page}
+            totalPages={result.totalPages}
+            buildPageUrl={(p) =>
+              `/search?q=${encodeURIComponent(q)}&category=${encodeURIComponent(category)}&difficulty=${encodeURIComponent(difficulty)}&duration=${duration}&sortBy=${sortBy}&page=${p}`
+            }
+          />
         )}
       </Container>
     </HomepageLayout>
