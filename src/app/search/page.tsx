@@ -42,9 +42,9 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
 
   return (
     <HomepageLayout>
-      <Container className="py-8 space-y-6">
+      <Container className="py-6 sm:py-8 space-y-6">
         {/* Header & Search Bar */}
-        <div className="space-y-4 border-b border-[#22222a] pb-6">
+        <div className="space-y-4 border-b border-[#1f1f26] pb-6">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
               <h1 className="text-2xl sm:text-3xl font-black text-white flex items-center">
@@ -52,7 +52,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
                 {q ? `Results for "${q}"` : "Discover Knowledge"}
               </h1>
               <p className="text-xs text-gray-400 mt-1">
-                Found {result.total} educational {result.total === 1 ? "lesson" : "lessons"} matching your criteria
+                Found {result.total} educational {result.total === 1 ? "lesson" : "lessons"} matching your intellectual appetite
               </p>
             </div>
 
@@ -61,7 +61,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
               <span className="text-gray-400 font-semibold flex items-center">
                 <SlidersHorizontal size={13} className="mr-1 text-[#ff9900]" /> Sort:
               </span>
-              <div className="flex items-center bg-[#15151a] p-1 rounded-md border border-[#262632]">
+              <div className="flex items-center bg-[#121216] p-1 rounded-sm border border-[#22222a]">
                 {[
                   { label: "Relevant", val: "relevant" },
                   { label: "Most Viewed", val: "views" },
@@ -71,7 +71,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
                   <Link
                     key={s.val}
                     href={`/search?q=${encodeURIComponent(q)}&category=${encodeURIComponent(category)}&difficulty=${encodeURIComponent(difficulty)}&duration=${duration}&sortBy=${s.val}`}
-                    className={`px-2.5 py-1 rounded text-xs font-semibold transition-colors ${
+                    className={`px-2.5 py-1 rounded-sm text-xs font-semibold transition-colors ${
                       sortBy === s.val
                         ? "bg-[#ff9900] text-black font-bold"
                         : "text-gray-400 hover:text-white"
@@ -91,10 +91,10 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
             </span>
             <Link
               href={`/search?q=${encodeURIComponent(q)}&category=all&difficulty=${encodeURIComponent(difficulty)}&duration=${duration}&sortBy=${sortBy}`}
-              className={`px-2.5 py-1 rounded text-xs transition-colors ${
+              className={`px-2.5 py-1 rounded-sm text-xs transition-colors ${
                 category === "all"
                   ? "bg-[#ff9900] text-black font-bold"
-                  : "bg-[#181820] text-gray-300 hover:bg-[#252530]"
+                  : "bg-[#141418] text-gray-300 hover:bg-[#1f1f26]"
               }`}
             >
               All
@@ -103,10 +103,10 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
               <Link
                 key={c.id}
                 href={`/search?q=${encodeURIComponent(q)}&category=${encodeURIComponent(c.name)}&difficulty=${encodeURIComponent(difficulty)}&duration=${duration}&sortBy=${sortBy}`}
-                className={`px-2.5 py-1 rounded text-xs transition-colors ${
+                className={`px-2.5 py-1 rounded-sm text-xs transition-colors ${
                   category.toLowerCase() === c.name.toLowerCase()
                     ? "bg-[#ff9900] text-black font-bold"
-                    : "bg-[#181820] text-gray-300 hover:bg-[#252530]"
+                    : "bg-[#141418] text-gray-300 hover:bg-[#1f1f26]"
                 }`}
               >
                 {c.name}
@@ -122,10 +122,10 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
                 <Link
                   key={lvl}
                   href={`/search?q=${encodeURIComponent(q)}&category=${encodeURIComponent(category)}&difficulty=${encodeURIComponent(lvl)}&duration=${duration}&sortBy=${sortBy}`}
-                  className={`px-2 py-0.5 rounded text-[11px] ${
+                  className={`px-2 py-0.5 rounded-sm text-[11px] ${
                     difficulty === lvl
                       ? "bg-white text-black font-bold"
-                      : "bg-[#181820] text-gray-400 hover:text-white"
+                      : "bg-[#141418] text-gray-400 hover:text-white"
                   }`}
                 >
                   {lvl}
@@ -144,10 +144,10 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
                 <Link
                   key={dur.val}
                   href={`/search?q=${encodeURIComponent(q)}&category=${encodeURIComponent(category)}&difficulty=${encodeURIComponent(difficulty)}&duration=${dur.val}&sortBy=${sortBy}`}
-                  className={`px-2 py-0.5 rounded text-[11px] ${
+                  className={`px-2 py-0.5 rounded-sm text-[11px] ${
                     duration === dur.val
                       ? "bg-white text-black font-bold"
-                      : "bg-[#181820] text-gray-400 hover:text-white"
+                      : "bg-[#141418] text-gray-400 hover:text-white"
                   }`}
                 >
                   {dur.label}
@@ -159,13 +159,13 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
 
         {/* Video Results Grid */}
         {result.videos.length === 0 ? (
-          <div className="p-12 text-center bg-[#141418] border border-[#24242c] rounded-xl space-y-4 my-8">
+          <div className="p-12 text-center bg-[#121216] border border-[#1f1f26] rounded-sm space-y-4 my-8">
             <Frown className="w-12 h-12 text-[#ff9900] mx-auto" />
             <h3 className="text-xl font-bold text-white">
-              Nothing exciting here yet. Let&apos;s find something educational.
+              No results. Even our smartest people couldn&apos;t find that one.
             </h3>
             <p className="text-xs text-gray-400 max-w-md mx-auto">
-              Your search history is cleaner than your browser history.
+              Your search history is looking suspiciously productive.
               Try searching for popular topics like <span className="text-[#ff9900]">Python</span>,{" "}
               <span className="text-[#ff9900]">Calculus</span>, or{" "}
               <span className="text-[#ff9900]">Linear Algebra</span>.
@@ -173,7 +173,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
             <div className="pt-2">
               <Link
                 href="/search"
-                className="inline-flex items-center px-4 py-2 bg-[#ff9900] text-black font-bold text-xs rounded-md hover:bg-[#e68a00] transition-colors"
+                className="inline-flex items-center px-4 py-2 bg-[#ff9900] text-black font-bold text-xs rounded-sm hover:bg-[#e68a00] transition-colors uppercase tracking-wider"
               >
                 <Sparkles size={13} className="mr-1.5" />
                 Reset Search Filters
@@ -188,7 +188,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
           </div>
         )}
 
-        {/* Pagination matching Screenshot 3 */}
+        {/* Centered Pagination bar matching Screenshot 3 */}
         {result.totalPages > 1 && (
           <Pagination
             currentPage={page}

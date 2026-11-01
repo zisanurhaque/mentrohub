@@ -30,7 +30,7 @@ export default async function CategoryDetailPage({ params, searchParams }: Props
 
   return (
     <HomepageLayout>
-      <Container className="py-8 space-y-8">
+      <Container className="py-6 sm:py-8 space-y-6">
         {/* Back Link */}
         <div>
           <Link
@@ -42,20 +42,20 @@ export default async function CategoryDetailPage({ params, searchParams }: Props
         </div>
 
         {/* Category Header Banner */}
-        <div className="p-6 sm:p-8 bg-gradient-to-r from-[#171720] via-[#1a1a24] to-[#14141a] border border-[#262634] rounded-xl space-y-3">
+        <div className="p-6 sm:p-8 bg-[#121216] border border-[#1f1f26] rounded-sm space-y-3">
           <div className="flex items-center space-x-2 text-[11px] font-black uppercase text-[#ff9900] tracking-wider">
             <Layers size={13} />
             <span>Category Hub • {total} Available Lessons</span>
           </div>
-          <h1 className="text-2xl sm:text-4xl font-black text-white">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-white">
             {category.name}
           </h1>
-          <p className="text-sm text-gray-300 max-w-2xl leading-relaxed">
+          <p className="text-xs sm:text-sm text-gray-300 max-w-2xl leading-relaxed">
             {category.description}
           </p>
 
           {/* Quick Filters */}
-          <div className="flex items-center flex-wrap gap-2 pt-3 border-t border-[#232330] text-xs">
+          <div className="flex items-center flex-wrap gap-2 pt-3 border-t border-[#1b1b22] text-xs">
             <span className="text-gray-400 font-semibold mr-1">Difficulty:</span>
             {["All", "Beginner", "Intermediate", "Advanced"].map((lvl) => {
               const active = (!difficulty && lvl === "All") || difficulty === lvl;
@@ -63,10 +63,10 @@ export default async function CategoryDetailPage({ params, searchParams }: Props
                 <Link
                   key={lvl}
                   href={`/categories/${category.slug}${lvl === "All" ? "" : `?difficulty=${lvl}`}`}
-                  className={`px-2.5 py-1 rounded text-xs transition-colors ${
+                  className={`px-2.5 py-1 rounded-sm text-xs transition-colors ${
                     active
                       ? "bg-[#ff9900] text-black font-bold"
-                      : "bg-[#202028] text-gray-300 hover:bg-[#2a2a36]"
+                      : "bg-[#181820] text-gray-300 hover:bg-[#22222a]"
                   }`}
                 >
                   {lvl}
@@ -78,7 +78,7 @@ export default async function CategoryDetailPage({ params, searchParams }: Props
 
         {/* Video Grid */}
         <div className="space-y-4">
-          <div className="flex items-center justify-between border-b border-[#22222a] pb-2">
+          <div className="flex items-center justify-between border-b border-[#1f1f26] pb-2">
             <h2 className="text-base font-bold text-white flex items-center">
               <BookOpen size={16} className="text-[#ff9900] mr-2" />
               All {category.name} Lessons ({videos.length})
@@ -86,7 +86,7 @@ export default async function CategoryDetailPage({ params, searchParams }: Props
           </div>
 
           {videos.length === 0 ? (
-            <div className="p-10 text-center bg-[#141418] border border-[#22222a] rounded-lg text-gray-400 text-xs">
+            <div className="p-10 text-center bg-[#121216] border border-[#1f1f26] rounded-sm text-gray-400 text-xs">
               No lessons match this difficulty level currently. Try selecting &quot;All&quot;.
             </div>
           ) : (

@@ -114,9 +114,13 @@ function DashboardContent() {
         <div className="p-6 sm:p-8 bg-gradient-to-r from-[#171720] via-[#1b1b24] to-[#14141a] border border-[#252530] rounded-xl flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="flex items-center space-x-4">
             {user.avatar ? (
+              /* eslint-disable-next-line @next/next/no-img-element */
               <img
                 src={user.avatar}
                 alt={user.name}
+                onError={(e) => {
+                  (e.currentTarget as HTMLElement).style.display = "none";
+                }}
                 className="w-16 h-16 rounded-full object-cover border-2 border-[#ff9900]"
               />
             ) : (

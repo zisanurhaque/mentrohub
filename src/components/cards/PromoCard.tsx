@@ -1,14 +1,16 @@
+"use client";
+
 import React from "react";
 import Link from "next/link";
-import { Sparkles, GraduationCap } from "lucide-react";
+import { GraduationCap, Zap } from "lucide-react";
 
 export default function PromoCard() {
   return (
-    <div className="relative group flex flex-col bg-gradient-to-br from-[#1a1408] via-[#241a05] to-[#120e03] border border-[#ff9900]/40 rounded-sm overflow-hidden p-3 justify-between aspect-video">
+    <div className="relative group flex flex-col bg-gradient-to-br from-[#1c1508] via-[#241a05] to-[#140f03] border border-[#ff9900]/40 rounded-sm overflow-hidden p-3 justify-between aspect-video shadow-md">
       {/* Top Bar with AD badge */}
       <div className="flex items-center justify-between">
-        <div className="flex items-center space-x-1 text-[#ff9900] text-[11px] font-black tracking-widest uppercase">
-          <GraduationCap size={15} />
+        <div className="flex items-center space-x-1 text-[#ff9900] text-[10px] font-black tracking-widest uppercase">
+          <GraduationCap size={14} />
           <span>OPENCOURSEWARE</span>
         </div>
         <span className="bg-[#38bdf8] text-black text-[9px] font-black px-1.5 py-0.2 rounded-sm uppercase tracking-wider">
@@ -33,11 +35,11 @@ export default function PromoCard() {
       <div className="flex items-center justify-between pt-1 border-t border-[#ff9900]/20 text-[10px]">
         <Link
           href="/collections/mathematics-made-simple"
-          className="bg-[#ff9900] hover:bg-[#e68a00] text-black font-black px-2.5 py-1 rounded-sm transition-colors uppercase flex items-center"
+          className="bg-[#ff9900] hover:bg-[#e68a00] text-black font-black px-2.5 py-1 rounded-sm transition-colors uppercase flex items-center shadow-sm"
         >
-          <Sparkles size={10} className="mr-1" /> Claim Knowledge
+          <Zap size={11} className="mr-1 fill-black" /> Claim Knowledge
         </Link>
-        <span className="text-[#777777] hover:text-gray-400 cursor-pointer">
+        <span className="text-[#888888] hover:text-gray-300 cursor-pointer text-[10px]">
           Remove Ads
         </span>
       </div>

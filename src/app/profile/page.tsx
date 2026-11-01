@@ -114,6 +114,7 @@ export default function ProfilePage() {
                           : "border-transparent opacity-70 hover:opacity-100"
                       }`}
                     >
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img src={p} alt="avatar" className="w-full h-full object-cover" />
                     </button>
                   ))}

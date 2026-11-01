@@ -6,146 +6,130 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-  --color-sidebar-ring: var(--sidebar-ring);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar: var(--sidebar);
-  --color-chart-5: var(--chart-5);
-  --color-chart-4: var(--chart-4);
-  --color-chart-3: var(--chart-3);
-  --color-chart-2: var(--chart-2);
-  --color-chart-1: var(--chart-1);
-  --color-ring: var(--ring);
-  --color-input: var(--input);
-  --color-border: var(--border);
-  --color-destructive: var(--destructive);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-accent: var(--accent);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-muted: var(--muted);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-secondary: var(--secondary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-primary: var(--primary);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-popover: var(--popover);
-  --color-card-foreground: var(--card-foreground);
-  --color-card: var(--card);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
+  --font-sans: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
   --color-hub-orange: #ff9900;
   --color-hub-orange-hover: #e68a00;
+  --color-hub-orange-active: #cc7a00;
+  --color-hub-black: #000000;
+  --color-hub-dark: #0a0a0c;
   --color-hub-charcoal: #0e0e11;
-  --color-hub-card: #18181c;
-  --color-hub-surface: #222228;
-  --color-hub-border: #2c2c36;
+  --color-hub-card: #141418;
+  --color-hub-surface: #1c1c22;
+  --color-hub-elevated: #24242e;
+  --color-hub-border: #22222a;
+  --color-hub-border-subtle: #1c1c22;
 }
 
 :root {
-  --radius: 0.375rem;
-  --background: #0e0e11;
+  --radius: 0.25rem;
+  --background: #0a0a0c;
   --foreground: #f4f4f6;
-  --card: #18181c;
+  --card: #141418;
   --card-foreground: #f4f4f6;
-  --popover: #18181c;
+  --popover: #141418;
   --popover-foreground: #f4f4f6;
   --primary: #ff9900;
   --primary-foreground: #000000;
-  --secondary: #222228;
+  --secondary: #1c1c22;
   --secondary-foreground: #f4f4f6;
-  --muted: #1e1e24;
+  --muted: #18181e;
   --muted-foreground: #9ca3af;
-  --accent: #2c2c36;
+  --accent: #24242e;
   --accent-foreground: #ff9900;
   --destructive: #ef4444;
-  --border: #282830;
-  --input: #24242c;
+  --border: #22222a;
+  --input: #1a1a20;
   --ring: #ff9900;
-  --chart-1: #ff9900;
-  --chart-2: #38bdf8;
-  --chart-3: #10b981;
-  --chart-4: #f59e0b;
-  --chart-5: #ec4899;
-  --sidebar: #121216;
-  --sidebar-foreground: #f4f4f6;
-  --sidebar-primary: #ff9900;
-  --sidebar-primary-foreground: #000000;
-  --sidebar-accent: #222228;
-  --sidebar-accent-foreground: #ff9900;
-  --sidebar-border: #282830;
-  --sidebar-ring: #ff9900;
 }
 
 .dark {
-  --background: #0e0e11;
+  --background: #0a0a0c;
   --foreground: #f4f4f6;
-  --card: #18181c;
+  --card: #141418;
   --card-foreground: #f4f4f6;
-  --popover: #18181c;
+  --popover: #141418;
   --popover-foreground: #f4f4f6;
   --primary: #ff9900;
   --primary-foreground: #000000;
-  --secondary: #222228;
+  --secondary: #1c1c22;
   --secondary-foreground: #f4f4f6;
-  --muted: #1e1e24;
+  --muted: #18181e;
   --muted-foreground: #9ca3af;
-  --accent: #2c2c36;
+  --accent: #24242e;
   --accent-foreground: #ff9900;
   --destructive: #ef4444;
-  --border: #282830;
-  --input: #24242c;
+  --border: #22222a;
+  --input: #1a1a20;
   --ring: #ff9900;
 }
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    border-color: #22222a;
   }
+
+  html {
+    color-scheme: dark;
+    scroll-behavior: smooth;
+  }
+
   body {
-    @apply bg-background text-foreground min-h-screen selection:bg-[#ff9900] selection:text-black;
+    @apply bg-[#0a0a0c] text-[#f4f4f6] min-h-screen selection:bg-[#ff9900] selection:text-black font-sans antialiased;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    letter-spacing: -0.011em;
   }
+
   h1 {
-    @apply text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight;
+    @apply text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-white leading-tight;
   }
+
   h2 {
-    @apply text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight;
+    @apply text-xl sm:text-2xl font-bold tracking-tight text-white leading-snug;
   }
+
   h3 {
-    @apply text-xl sm:text-2xl font-bold;
+    @apply text-base sm:text-lg font-semibold tracking-tight text-white leading-snug;
   }
+
   h4 {
-    @apply text-lg sm:text-xl font-semibold;
+    @apply text-sm sm:text-base font-semibold text-white;
   }
-  h5 {
-    @apply text-base font-semibold;
+
+  p {
+    @apply leading-relaxed;
   }
-  h6 {
-    @apply text-sm font-semibold;
+
+  button, a {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff9900] focus-visible:ring-offset-1 focus-visible:ring-offset-black;
   }
 }
 
-/* Custom scrollbar for adult-hub style */
+/* Custom sleek scrollbar matching adult-hub aesthetic */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
 }
+
 ::-webkit-scrollbar-track {
-  background: #0e0e11;
+  background: #0a0a0c;
 }
+
 ::-webkit-scrollbar-thumb {
-  background: #282832;
-  border-radius: 4px;
+  background: #22222a;
+  border-radius: 3px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
-  background: #3a3a46;
+  background: #33333e;
+}
+
+/* Hide scrollbar utility for horizontal pill rails */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }

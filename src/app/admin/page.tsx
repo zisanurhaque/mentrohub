@@ -367,6 +367,7 @@ export default function AdminPage() {
                     <tr key={vid.id} className="hover:bg-[#191920] transition-colors">
                       <td className="p-3">
                         <div className="flex items-center space-x-3">
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
                           <img
                             src={vid.thumbnailUrl}
                             alt={vid.title}

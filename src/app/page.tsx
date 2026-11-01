@@ -8,6 +8,7 @@ import PromoCard from "@/components/cards/PromoCard";
 import CategoryCard from "@/components/cards/CategoryCard";
 import CollectionCard from "@/components/cards/CollectionCard";
 import Pagination from "@/components/layout/Pagination";
+import EducationalAd from "@/components/ads/EducationalAd";
 import { getCategories, getCollections, getVideos } from "@/lib/db";
 import {
   Flame,
@@ -38,10 +39,10 @@ export default async function HomePage() {
       <Container className="py-8 space-y-12">
         {/* Section 1: Main Video Discovery Grid (Exact Match to Screenshot 2 & 3) */}
         <section className="space-y-4">
-          <div className="flex items-center justify-between border-b border-[#22222a] pb-3">
-            <div className="flex items-center space-x-2">
-              <span className="p-1.5 rounded bg-[#ff9900]/10 text-[#ff9900]">
-                <Flame size={20} className="fill-[#ff9900]" />
+          <div className="flex items-center justify-between border-b border-[#1f1f26] pb-3">
+            <div className="flex items-center space-x-2.5">
+              <span className="p-1.5 rounded-sm bg-[#ff9900]/10 text-[#ff9900]">
+                <Flame size={18} className="fill-[#ff9900]" />
               </span>
               <div>
                 <h2 className="text-xl sm:text-2xl font-black text-white tracking-tight flex items-center">
@@ -75,7 +76,7 @@ export default async function HomePage() {
             ))}
           </div>
 
-          {/* Pagination bar matching Screenshot 3 */}
+          {/* Centered Pagination bar matching Screenshot 3 */}
           <Pagination
             currentPage={1}
             totalPages={4}
@@ -83,19 +84,22 @@ export default async function HomePage() {
           />
         </section>
 
-        {/* Section 2: Hot Categories */}
+        {/* Mid-Page Promotional Banner Placement */}
+        <EducationalAd variant="banner" />
+
+        {/* Section 2: Popular Categories */}
         <section className="space-y-4">
-          <div className="flex items-center justify-between border-b border-[#22222a] pb-3">
-            <div className="flex items-center space-x-2">
-              <span className="p-1.5 rounded bg-[#202028] text-[#ff9900]">
-                <FolderTree size={20} />
+          <div className="flex items-center justify-between border-b border-[#1f1f26] pb-3">
+            <div className="flex items-center space-x-2.5">
+              <span className="p-1.5 rounded-sm bg-[#1c1c24] text-[#ff9900]">
+                <FolderTree size={18} />
               </span>
               <div>
                 <h2 className="text-xl sm:text-2xl font-black text-white tracking-tight">
                   Popular Categories
                 </h2>
                 <p className="text-xs text-gray-400">
-                  Select your kink: code, calculus, deep learning, or balance sheets
+                  Select your intellectual discipline: code, calculus, deep learning, or finance
                 </p>
               </div>
             </div>
@@ -104,7 +108,7 @@ export default async function HomePage() {
               href="/categories"
               className="text-xs font-bold text-[#ff9900] hover:text-[#e68a00] flex items-center group"
             >
-              All categories <ArrowRight size={13} className="ml-1 group-hover:translate-x-0.5 transition-transform" />
+              All disciplines <ArrowRight size={13} className="ml-1 group-hover:translate-x-0.5 transition-transform" />
             </Link>
           </div>
 
@@ -117,17 +121,17 @@ export default async function HomePage() {
 
         {/* Section 3: Most Watched Knowledge */}
         <section className="space-y-4">
-          <div className="flex items-center justify-between border-b border-[#22222a] pb-3">
-            <div className="flex items-center space-x-2">
-              <span className="p-1.5 rounded bg-[#ff9900]/10 text-[#ff9900]">
-                <Eye size={20} />
+          <div className="flex items-center justify-between border-b border-[#1f1f26] pb-3">
+            <div className="flex items-center space-x-2.5">
+              <span className="p-1.5 rounded-sm bg-[#ff9900]/10 text-[#ff9900]">
+                <Eye size={18} />
               </span>
               <div>
                 <h2 className="text-xl sm:text-2xl font-black text-white tracking-tight">
                   Most Watched Knowledge
                 </h2>
                 <p className="text-xs text-gray-400">
-                  The internet&apos;s most viewed educational breakdowns of all time
+                  The internet&apos;s most viewed educational breakdowns of all time • Warning: May cause excessive learning
                 </p>
               </div>
             </div>
@@ -149,17 +153,17 @@ export default async function HomePage() {
 
         {/* Section 4: Curated Series / Collections */}
         <section className="space-y-4">
-          <div className="flex items-center justify-between border-b border-[#22222a] pb-3">
-            <div className="flex items-center space-x-2">
-              <span className="p-1.5 rounded bg-[#202028] text-[#ff9900]">
-                <Layers size={20} />
+          <div className="flex items-center justify-between border-b border-[#1f1f26] pb-3">
+            <div className="flex items-center space-x-2.5">
+              <span className="p-1.5 rounded-sm bg-[#1c1c24] text-[#ff9900]">
+                <Layers size={18} />
               </span>
               <div>
                 <h2 className="text-xl sm:text-2xl font-black text-white tracking-tight">
                   Curated Collections
                 </h2>
                 <p className="text-xs text-gray-400">
-                  Multi-part learning sequences designed for complete subject mastery
+                  Multi-part learning sequences designed for complete subject mastery from scratch
                 </p>
               </div>
             </div>
@@ -179,12 +183,12 @@ export default async function HomePage() {
           </div>
         </section>
 
-        {/* Section 5: Recently Uploaded Brain Food */}
+        {/* Section 5: Freshly Uploaded Brain Food */}
         <section className="space-y-4">
-          <div className="flex items-center justify-between border-b border-[#22222a] pb-3">
-            <div className="flex items-center space-x-2">
-              <span className="p-1.5 rounded bg-[#ff9900]/10 text-[#ff9900]">
-                <Sparkles size={20} />
+          <div className="flex items-center justify-between border-b border-[#1f1f26] pb-3">
+            <div className="flex items-center space-x-2.5">
+              <span className="p-1.5 rounded-sm bg-[#ff9900]/10 text-[#ff9900]">
+                <Sparkles size={18} />
               </span>
               <div>
                 <h2 className="text-xl sm:text-2xl font-black text-white tracking-tight">
@@ -200,7 +204,7 @@ export default async function HomePage() {
               href="/search?sortBy=newest"
               className="text-xs font-bold text-[#ff9900] hover:text-[#e68a00] flex items-center group"
             >
-              Newest uploads <ArrowRight size={13} className="ml-1 group-hover:translate-x-0.5 transition-transform" />
+              Latest uploads <ArrowRight size={13} className="ml-1 group-hover:translate-x-0.5 transition-transform" />
             </Link>
           </div>
 
@@ -210,35 +214,6 @@ export default async function HomePage() {
             ))}
           </div>
         </section>
-
-        {/* Humorous Bottom Callout */}
-        <div className="p-8 rounded-sm bg-gradient-to-r from-[#141416] via-[#1c1c20] to-[#141416] border border-[#2b2b34] text-center space-y-4 shadow-xl">
-          <span className="bg-[#ff9900] text-black text-xs font-black uppercase px-3 py-1 rounded-sm tracking-wider">
-            Ready to get educated?
-          </span>
-          <h3 className="text-2xl sm:text-3xl font-black text-white">
-            Your Search History Is About To Get Smarter.
-          </h3>
-          <p className="text-sm text-gray-300 max-w-xl mx-auto leading-relaxed">
-            Create a free MentroHub profile to save your favorite lectures,
-            track your watch progress, write timestamped study notes, and join
-            the cleanest educational community on the internet.
-          </p>
-          <div className="pt-2 flex items-center justify-center space-x-3">
-            <Link
-              href="/register"
-              className="bg-[#ff9900] hover:bg-[#e68a00] text-black font-extrabold text-xs px-6 py-2.5 rounded-sm transition-colors shadow"
-            >
-              Create Free Account
-            </Link>
-            <Link
-              href="/search"
-              className="bg-[#242428] hover:bg-[#2e2e34] text-white font-bold text-xs px-5 py-2.5 rounded-sm border border-[#33333e] transition-colors"
-            >
-              Browse All Lessons
-            </Link>
-          </div>
-        </div>
       </Container>
     </HomepageLayout>
   );

@@ -75,6 +75,7 @@ export default function WatchComments({ videoId }: WatchCommentsProps) {
       {user ? (
         <form onSubmit={(e) => handleSubmit(e)} className="flex items-start space-x-3">
           {user.avatar ? (
+            /* eslint-disable-next-line @next/next/no-img-element */
             <img
               src={user.avatar}
               alt={user.name}
@@ -128,6 +129,7 @@ export default function WatchComments({ videoId }: WatchCommentsProps) {
               <div className="flex items-start justify-between">
                 <div className="flex items-center space-x-2.5">
                   {comment.userAvatar ? (
+                    /* eslint-disable-next-line @next/next/no-img-element */
                     <img
                       src={comment.userAvatar}
                       alt={comment.userName}

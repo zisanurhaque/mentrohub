@@ -1,10 +1,21 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { Video } from "@/types";
-import { CheckCircle2, MoreVertical, Eye, Sparkles } from "lucide-react";
+import {
+  CheckCircle2,
+  MoreVertical,
+  Eye,
+  Sparkles,
+  Bookmark,
+  CheckCircle,
+  Copy,
+  ExternalLink,
+} from "lucide-react";
 import { formatViews } from "@/lib/formatters";
+import { toggleStoredBookmark, saveStoredHistory } from "@/lib/client-store";
+import { useAuth } from "@/components/auth/AuthContext";
 
 interface VideoCardProps {
   video: Video;
@@ -12,39 +23,101 @@ interface VideoCardProps {
 }
 
 export default function VideoCard({ video }: VideoCardProps) {
+  const { user } = useAuth();
   const [imgSrc, setImgSrc] = useState(
     video.thumbnailUrl || `https://i.ytimg.com/vi/${video.youtubeId}/hqdefault.jpg`
   );
   const [isHovered, setIsHovered] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [feedbackToast, setFeedbackToast] = useState<string | null>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  // Close context menu when clicking outside
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+        setMenuOpen(false);
+      }
+    }
+    if (menuOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [menuOpen]);
+
+  const showToast = (msg: string) => {
+    setFeedbackToast(msg);
+    setTimeout(() => setFeedbackToast(null), 2500);
+  };
+
+  const handleSaveLesson = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setMenuOpen(false);
+    if (!user) {
+      showToast("Please log in to save lessons");
+      return;
+    }
+    const res = toggleStoredBookmark(video.id, user.id);
+    showToast(res.saved ? "Saved to your library!" : "Removed from saved lessons");
+  };
+
+  const handleCopyLink = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setMenuOpen(false);
+    const url = `${window.location.origin}/watch/${video.id}`;
+    navigator.clipboard.writeText(url);
+    showToast("Lesson link copied to clipboard!");
+  };
+
+  const handleMarkComplete = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setMenuOpen(false);
+    if (!user) {
+      showToast("Please log in to mark complete");
+      return;
+    }
+    saveStoredHistory(video.id, user.id, true);
+    showToast("Marked as completed! 🎓");
+  };
 
   return (
     <div
-      className="group flex flex-col bg-[#0e0e10] hover:bg-[#161619] transition-colors rounded-sm overflow-hidden"
+      className="group relative flex flex-col bg-[#0c0c0e] hover:bg-[#141418] transition-colors rounded-sm overflow-visible"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
+      {/* Toast Notification */}
+      {feedbackToast && (
+        <div className="absolute -top-9 left-1/2 -translate-x-1/2 bg-[#ff9900] text-black font-extrabold text-[11px] px-3 py-1 rounded-sm shadow-xl z-50 whitespace-nowrap animate-in fade-in zoom-in-95 duration-150">
+          {feedbackToast}
+        </div>
+      )}
+
       {/* 16:9 Thumbnail Wrapper */}
       <Link
         href={`/watch/${video.id}`}
-        className="relative block aspect-video w-full overflow-hidden bg-black/80"
+        className="relative block aspect-video w-full overflow-hidden bg-black/90 rounded-sm"
       >
         <img
           src={imgSrc}
           alt={video.title}
           onError={() => setImgSrc(`https://i.ytimg.com/vi/${video.youtubeId}/mqdefault.jpg`)}
-          className={`w-full h-full object-cover transition-transform duration-200 ${
+          className={`w-full h-full object-cover transition-transform duration-300 ease-out ${
             isHovered ? "scale-105 opacity-90" : "scale-100 opacity-95"
           }`}
           loading="lazy"
         />
 
-        {/* Top Badges: HD & Featured */}
+        {/* Top Badges: HD & HOT / FEATURED */}
         <div className="absolute top-1.5 left-1.5 flex items-center space-x-1 pointer-events-none">
           <span className="bg-black/90 text-[#ff9900] text-[9px] font-black px-1 py-0.5 rounded-sm border border-[#ff9900]/40 tracking-wider">
             HD
           </span>
           {video.featured && (
-            <span className="bg-[#ff9900] text-black text-[9px] font-extrabold px-1.5 py-0.5 rounded-sm flex items-center shadow">
+            <span className="bg-[#ff9900] text-black text-[9px] font-extrabold px-1.5 py-0.5 rounded-sm flex items-center shadow-sm">
               <Sparkles size={9} className="mr-0.5" />
               HOT
             </span>
@@ -58,7 +131,7 @@ export default function VideoCard({ video }: VideoCardProps) {
           </span>
         </div>
 
-        {/* Hover orange indicator bar */}
+        {/* Hover orange scrubber preview indicator */}
         <div
           className={`absolute bottom-0 left-0 right-0 h-[2.5px] bg-[#ff9900] transition-opacity duration-150 ${
             isHovered ? "opacity-100" : "opacity-0"
@@ -88,7 +161,7 @@ export default function VideoCard({ video }: VideoCardProps) {
         </div>
 
         {/* Line 2: Video Title on Left | Three Dots Menu on Right */}
-        <div className="flex items-start justify-between gap-1">
+        <div className="flex items-start justify-between gap-1 relative">
           <Link href={`/watch/${video.id}`} className="block flex-1 min-w-0">
             <h3
               className="text-xs sm:text-[13px] font-bold text-[#e2e2e8] group-hover:text-[#ff9900] line-clamp-2 leading-tight transition-colors"
@@ -98,13 +171,58 @@ export default function VideoCard({ video }: VideoCardProps) {
             </h3>
           </Link>
 
-          <button
-            type="button"
-            className="text-[#666666] hover:text-white p-0.5 shrink-0 transition-colors"
-            title="More Options"
-          >
-            <MoreVertical size={14} />
-          </button>
+          {/* Three Dots Button & Interactive Dropdown Menu */}
+          <div className="relative" ref={menuRef}>
+            <button
+              type="button"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setMenuOpen(!menuOpen);
+              }}
+              className="text-[#777777] hover:text-white p-0.5 shrink-0 transition-colors rounded-sm hover:bg-[#1f1f26]"
+              title="More Options"
+              aria-expanded={menuOpen}
+            >
+              <MoreVertical size={14} />
+            </button>
+
+            {menuOpen && (
+              <div className="absolute right-0 bottom-full mb-1 w-48 bg-[#18181e] border border-[#2c2c38] rounded-sm shadow-2xl py-1 z-50 animate-in fade-in zoom-in-95 duration-100 text-xs">
+                <button
+                  type="button"
+                  onClick={handleSaveLesson}
+                  className="w-full text-left px-3 py-2 text-gray-200 hover:text-[#ff9900] hover:bg-[#22222c] flex items-center transition-colors"
+                >
+                  <Bookmark size={13} className="mr-2 text-gray-400" />
+                  Save to Library
+                </button>
+                <button
+                  type="button"
+                  onClick={handleCopyLink}
+                  className="w-full text-left px-3 py-2 text-gray-200 hover:text-[#ff9900] hover:bg-[#22222c] flex items-center transition-colors"
+                >
+                  <Copy size={13} className="mr-2 text-gray-400" />
+                  Copy Link
+                </button>
+                <button
+                  type="button"
+                  onClick={handleMarkComplete}
+                  className="w-full text-left px-3 py-2 text-gray-200 hover:text-[#ff9900] hover:bg-[#22222c] flex items-center transition-colors border-t border-[#23232c]"
+                >
+                  <CheckCircle size={13} className="mr-2 text-emerald-400" />
+                  Mark as Completed
+                </button>
+                <Link
+                  href={`/watch/${video.id}`}
+                  className="w-full text-left px-3 py-2 text-gray-200 hover:text-[#ff9900] hover:bg-[#22222c] flex items-center transition-colors border-t border-[#23232c]"
+                >
+                  <ExternalLink size={13} className="mr-2 text-gray-400" />
+                  Open Player
+                </Link>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
