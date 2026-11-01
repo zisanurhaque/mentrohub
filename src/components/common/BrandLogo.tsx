@@ -22,7 +22,7 @@ export default function BrandLogo({
     },
     md: {
       text: "text-2xl sm:text-[26px]",
-      badge: "text-xs sm:text-sm px-2 py-0.5",
+      badge: "text-xs sm:text-3xl px-1 py-0.5",
       gap: "gap-1",
     },
     lg: {
@@ -40,9 +40,9 @@ export default function BrandLogo({
         Mentro
       </span>
       <span
-        className={`bg-[#ff9900] text-black font-bold uppercase rounded-md tracking-tight leading-none transition-all group-hover:bg-[#e68a00] shadow-sm ml-1 ${sizeClasses.badge}`}
+        className={`bg-[#ff9900] text-black font-bold rounded-md tracking-tight leading-none transition-all group-hover:bg-[#e68a00] shadow-sm ml-2 ${sizeClasses.badge}`}
       >
-        HUB
+        hub
       </span>
       {showTagline && (
         <span className="hidden sm:inline-block text-[10px] font-medium text-gray-400 ml-2.5 tracking-wider uppercase border-l border-gray-700 pl-2.5">
@@ -54,7 +54,10 @@ export default function BrandLogo({
 
   if (href) {
     return (
-      <Link href={href} className="inline-flex items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff9900] focus-visible:ring-offset-2 focus-visible:ring-offset-black rounded-sm">
+      <Link
+        href={href}
+        className="inline-flex items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff9900] focus-visible:ring-offset-2 focus-visible:ring-offset-black rounded-sm"
+      >
         {content}
       </Link>
     );

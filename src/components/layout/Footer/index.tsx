@@ -14,7 +14,6 @@ import {
   ExternalLink,
 } from "lucide-react";
 import BrandLogo from "@/components/common/BrandLogo";
-import EducationalAd from "@/components/ads/EducationalAd";
 
 const LANGUAGES = [
   { code: "en", name: "English" },
@@ -56,14 +55,13 @@ export default function Footer() {
 
   return (
     <>
-      {/* Subtle Pre-Footer Educational Ad Placement */}
-      <EducationalAd variant="footer" />
-
       {/* Humorous Educational Quote Strip */}
       <div className="bg-[#0b0b0e] border-t border-[#18181f] py-3 text-center px-4">
         <p className="text-[11px] sm:text-xs text-[#a0a0aa] font-normal flex items-center justify-center space-x-2">
           <Sparkles size={13} className="text-[#ff9900]" />
-          <span>Less scrolling through nonsense. More scrolling through knowledge.</span>
+          <span>
+            Less scrolling through nonsense. More scrolling through knowledge.
+          </span>
           <span className="hidden md:inline text-gray-500">•</span>
           <span className="hidden md:inline text-gray-300 font-medium">
             We take learning seriously. Ourselves? Not so much.
@@ -72,26 +70,28 @@ export default function Footer() {
       </div>
 
       {/* Main Footer Container: Unified subtle elevated panel */}
-      <footer className="bg-[#0c0c10] border-t border-[#1c1c24] text-xs text-gray-400 pt-10 pb-8">
+      <footer className="bg-[#0c0c10] border-t border-[#1c1c24] text-xs text-gray-400 pt-10 pb-7">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
           {/* Top Disclaimer Paragraph */}
           <p className="text-[#808088] text-[11px] sm:text-xs max-w-4xl mx-auto text-center leading-relaxed font-normal">
-            MentroHub provides you with unlimited free educational videos with the hottest professors.
-            Enjoy the largest amateur intellectual community on the net as well as full-length lectures
-            from the top Ivy League studios. We update our educational videos daily to ensure you always
-            get the best quality brain food.
+            MentroHub provides you with unlimited free educational videos with
+            the hottest professors. Enjoy the largest amateur intellectual
+            community on the net as well as full-length lectures from the top
+            Ivy League studios. We update our educational videos daily to ensure
+            you always get the best quality brain food.
           </p>
 
           {/* Main Footer Grid: 4 Columns with consistent visual hierarchy */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-10 pt-2 border-t border-[#181820]">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-10 pt-10 border-t border-[#181820]">
             {/* Col 1: Brand Wordmark, Description & Social Icons (4 cols on lg) */}
             <div className="lg:col-span-4 space-y-4">
               <BrandLogo size="md" showTagline />
 
               <p className="text-xs text-gray-400 leading-relaxed font-normal max-w-sm">
                 The internet&apos;s premier educational entertainment platform.
-                Legitimate, world-class university lectures packaged in the web&apos;s most recognizable
-                and engaging streaming layout. 100% free, consensual, and safe for work.
+                Legitimate, world-class university lectures packaged in the
+                web&apos;s most recognizable and engaging streaming layout. 100%
+                free, consensual, and safe for work.
               </p>
 
               {/* Social Icons & Language Pill */}
@@ -168,32 +168,50 @@ export default function Footer() {
               </h4>
               <ul className="space-y-2 text-xs font-normal">
                 <li>
-                  <Link href="/categories/programming" className="text-gray-400 hover:text-[#ff9900] transition-colors">
+                  <Link
+                    href="/categories/programming"
+                    className="text-gray-400 hover:text-[#ff9900] transition-colors"
+                  >
                     Programming & Code
                   </Link>
                 </li>
                 <li>
-                  <Link href="/categories/mathematics" className="text-gray-400 hover:text-[#ff9900] transition-colors">
+                  <Link
+                    href="/categories/mathematics"
+                    className="text-gray-400 hover:text-[#ff9900] transition-colors"
+                  >
                     Higher Mathematics
                   </Link>
                 </li>
                 <li>
-                  <Link href="/categories/artificial-intelligence" className="text-gray-400 hover:text-[#ff9900] transition-colors">
+                  <Link
+                    href="/categories/artificial-intelligence"
+                    className="text-gray-400 hover:text-[#ff9900] transition-colors"
+                  >
                     Artificial Intelligence
                   </Link>
                 </li>
                 <li>
-                  <Link href="/categories/science" className="text-gray-400 hover:text-[#ff9900] transition-colors">
+                  <Link
+                    href="/categories/science"
+                    className="text-gray-400 hover:text-[#ff9900] transition-colors"
+                  >
                     Physics & Science
                   </Link>
                 </li>
                 <li>
-                  <Link href="/categories/business-finance" className="text-gray-400 hover:text-[#ff9900] transition-colors">
+                  <Link
+                    href="/categories/business-finance"
+                    className="text-gray-400 hover:text-[#ff9900] transition-colors"
+                  >
                     Finance & Economics
                   </Link>
                 </li>
                 <li>
-                  <Link href="/categories/productivity-tools" className="text-gray-400 hover:text-[#ff9900] transition-colors">
+                  <Link
+                    href="/categories/productivity-tools"
+                    className="text-gray-400 hover:text-[#ff9900] transition-colors"
+                  >
                     Productivity & Excel
                   </Link>
                 </li>
@@ -207,17 +225,26 @@ export default function Footer() {
               </h4>
               <ul className="space-y-2 text-xs font-normal">
                 <li>
-                  <Link href="/collections" className="text-gray-400 hover:text-[#ff9900] transition-colors">
+                  <Link
+                    href="/collections"
+                    className="text-gray-400 hover:text-[#ff9900] transition-colors"
+                  >
                     Curated Tracks
                   </Link>
                 </li>
                 <li>
-                  <Link href="/search?q=Grant+Sanderson" className="text-gray-400 hover:text-[#ff9900] transition-colors">
+                  <Link
+                    href="/search?q=Grant+Sanderson"
+                    className="text-gray-400 hover:text-[#ff9900] transition-colors"
+                  >
                     Top Professors
                   </Link>
                 </li>
                 <li>
-                  <Link href="/dashboard?tab=saved" className="text-gray-400 hover:text-[#ff9900] transition-colors">
+                  <Link
+                    href="/dashboard?tab=saved"
+                    className="text-gray-400 hover:text-[#ff9900] transition-colors"
+                  >
                     Study Notes & Saved
                   </Link>
                 </li>
@@ -260,13 +287,16 @@ export default function Footer() {
                 </div>
 
                 <p className="text-xs text-gray-400 leading-relaxed font-normal">
-                  Get a curated weekly digest of top educational lectures, cheat sheets, and brain food. Zero spam.
+                  Get a curated weekly digest of top educational lectures, cheat
+                  sheets, and brain food. Zero spam.
                 </p>
 
                 {newsletterSubscribed ? (
                   <div className="p-2.5 rounded bg-[#ff9900]/15 border border-[#ff9900]/40 text-[#ff9900] text-xs font-medium flex items-center space-x-2 animate-in fade-in duration-200">
                     <Check size={14} className="text-[#ff9900]" />
-                    <span>Welcome to the intellectual elite! Check your inbox soon.</span>
+                    <span>
+                      Welcome to the intellectual elite! Check your inbox soon.
+                    </span>
                   </div>
                 ) : (
                   <form onSubmit={handleNewsletterSubmit} className="space-y-2">
@@ -352,16 +382,31 @@ export default function Footer() {
 
             <div className="space-y-3 text-xs text-gray-300 leading-relaxed max-h-[60vh] overflow-y-auto pr-1 font-normal">
               <p>
-                <strong>MentroHub is a legitimate educational entertainment platform.</strong> It humorously adapts the layout, visual hierarchy, and recognizable aesthetics of popular video-sharing sites for 100% clean, safe-for-work, and world-class educational lectures.
+                <strong>
+                  MentroHub is a legitimate educational entertainment platform.
+                </strong>{" "}
+                It humorously adapts the layout, visual hierarchy, and
+                recognizable aesthetics of popular video-sharing sites for 100%
+                clean, safe-for-work, and world-class educational lectures.
               </p>
               <p>
-                All video streams embedded on this platform originate from official, publicly accessible YouTube channels belonging to esteemed educators, institutions, and foundations—including Harvard CS50, 3Blue1Brown, freeCodeCamp, Veritasium, and Andrej Karpathy.
+                All video streams embedded on this platform originate from
+                official, publicly accessible YouTube channels belonging to
+                esteemed educators, institutions, and foundations—including
+                Harvard CS50, 3Blue1Brown, freeCodeCamp, Veritasium, and Andrej
+                Karpathy.
               </p>
               <p>
-                We do not host proprietary copyright videos directly or bypass YouTube terms. The platform exists to make learning addictive, fun, and memorable.
+                We do not host proprietary copyright videos directly or bypass
+                YouTube terms. The platform exists to make learning addictive,
+                fun, and memorable.
               </p>
               <div className="p-3 bg-[#1a1a24] rounded-sm border border-[#2a2a3a] text-gray-200">
-                <span className="text-[#ff9900] font-semibold">RTE® Certification:</span> Restricted To Education. Guaranteed 0% illicit content, 100% intellectual enrichment.
+                <span className="text-[#ff9900] font-semibold">
+                  RTE® Certification:
+                </span>{" "}
+                Restricted To Education. Guaranteed 0% illicit content, 100%
+                intellectual enrichment.
               </div>
             </div>
 

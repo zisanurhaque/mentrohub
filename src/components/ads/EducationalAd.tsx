@@ -2,7 +2,14 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { Sparkles, GraduationCap, X, Zap, Brain, ShieldCheck } from "lucide-react";
+import {
+  Sparkles,
+  GraduationCap,
+  X,
+  Zap,
+  Brain,
+  ShieldCheck,
+} from "lucide-react";
 
 export type AdVariant = "banner" | "sidebar" | "footer" | "card";
 
@@ -35,7 +42,8 @@ const AD_PRESETS = [
   {
     id: "excel",
     brand: "Ctrl + Z Your Bad Decisions",
-    tagline: "Master VLOOKUP, INDEX/MATCH, and formulas before your boss notices.",
+    tagline:
+      "Master VLOOKUP, INDEX/MATCH, and formulas before your boss notices.",
     cta: "Claim Spreadsheet Mastery",
     url: "/collections/excel-for-professionals",
     badge: "Sponsored",
@@ -45,7 +53,8 @@ const AD_PRESETS = [
   {
     id: "sleep",
     brand: "Sleep Is Temporary",
-    tagline: "Knowledge is forever. Binge Stanford CS50 and MIT Linear Algebra guilt-free.",
+    tagline:
+      "Knowledge is forever. Binge Stanford CS50 and MIT Linear Algebra guilt-free.",
     cta: "Binge Hardcore Knowledge",
     url: "/collections/learn-python-from-scratch",
     badge: "Ad",
@@ -64,10 +73,10 @@ export default function EducationalAd({
     variant === "sidebar"
       ? AD_PRESETS[3]
       : variant === "footer"
-      ? AD_PRESETS[1]
-      : variant === "card"
-      ? AD_PRESETS[2]
-      : AD_PRESETS[0];
+        ? AD_PRESETS[1]
+        : variant === "card"
+          ? AD_PRESETS[2]
+          : AD_PRESETS[0];
 
   if (closed) return null;
 
@@ -75,7 +84,7 @@ export default function EducationalAd({
   if (variant === "banner") {
     return (
       <div
-        className={`relative overflow-hidden rounded-md border border-[#2b2512] bg-gradient-to-r from-[#171206] via-[#211805] to-[#120e05] p-3.5 sm:p-4 text-xs transition-all ${className}`}
+        className={`relative overflow-hidden rounded-md border border-[#2b2512] bg-gradient-to-r from-[#171206] via-[#211805] to-[#120e05] p-3.5 px-4 sm:px-6 lg:px-8 sm:p-4 text-xs transition-all ${className}`}
       >
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 relative z-10">
           <div className="flex items-center space-x-3">
@@ -144,9 +153,7 @@ export default function EducationalAd({
           <h4 className="text-base font-black text-white tracking-tight">
             {ad.brand}
           </h4>
-          <p className="text-xs text-[#ff9900] font-bold">
-            {ad.highlight}
-          </p>
+          <p className="text-xs text-[#ff9900] font-bold">{ad.highlight}</p>
           <p className="text-xs text-gray-300 leading-relaxed max-w-xs mx-auto">
             {ad.tagline}
           </p>
@@ -161,7 +168,8 @@ export default function EducationalAd({
           </Link>
           <div className="flex items-center justify-between text-[10px] text-gray-400 pt-2">
             <span className="flex items-center">
-              <ShieldCheck size={11} className="mr-0.5 text-[#ff9900]" /> 100% Consensual Knowledge
+              <ShieldCheck size={11} className="mr-0.5 text-[#ff9900]" /> 100%
+              Consensual Knowledge
             </span>
             <button
               type="button"
@@ -233,9 +241,7 @@ export default function EducationalAd({
           {ad.brand}
         </h4>
         <p className="text-sm font-bold text-[#ff9900]">{ad.highlight}</p>
-        <p className="text-[11px] text-gray-300 line-clamp-2">
-          {ad.tagline}
-        </p>
+        <p className="text-[11px] text-gray-300 line-clamp-2">{ad.tagline}</p>
       </div>
 
       <div className="flex items-center justify-between pt-1 border-t border-[#ff9900]/20 text-[10px]">
