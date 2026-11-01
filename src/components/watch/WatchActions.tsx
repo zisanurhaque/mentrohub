@@ -1,9 +1,17 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useAuth } from "@/components/auth/AuthContext";
 import { ThumbsUp, ThumbsDown, Bookmark, CheckCircle, Share2, Check } from "lucide-react";
 import { getApprovalRating } from "@/lib/formatters";
+import {
+  getLikedVideos,
+  toggleVideoLike,
+  getStoredBookmarks,
+  toggleStoredBookmark,
+  saveStoredHistory,
+  getStoredHistory,
+} from "@/lib/client-store";
 
 interface WatchActionsProps {
   videoId: string;
@@ -24,68 +32,58 @@ export default function WatchActions({
   const [copied, setCopied] = useState(false);
   const [toastMsg, setToastMsg] = useState<string | null>(null);
 
+  useEffect(() => {
+    const liked = getLikedVideos().includes(videoId);
+    setIsLiked(liked);
+    if (liked) {
+      setLikes(initialLikes + 1);
+    }
+
+    const saved = getStoredBookmarks().some((b) => b.videoId === videoId);
+    setIsSaved(saved);
+
+    const hist = getStoredHistory().find((h) => h.videoId === videoId);
+    setIsCompleted(!!hist?.completed);
+  }, [videoId, initialLikes]);
+
   const showToast = (msg: string) => {
     setToastMsg(msg);
     setTimeout(() => setToastMsg(null), 3000);
   };
 
-  const handleLike = async () => {
+  const handleLike = () => {
     if (!user) {
       showToast("Please log in to like this lesson");
       return;
     }
 
-    try {
-      const res = await fetch(`/api/videos/${videoId}/like`, { method: "POST" });
-      const data = await res.json();
-      if (res.ok) {
-        setLikes(data.likes);
-        setIsLiked(data.isLiked);
-        showToast(data.isLiked ? "Added to liked lessons!" : "Removed like");
-      }
-    } catch {
-      showToast("Failed to update like status");
-    }
+    const result = toggleVideoLike(videoId);
+    setIsLiked(result.isLiked);
+    setLikes((prev) => (result.isLiked ? prev + 1 : prev - 1));
+    showToast(result.isLiked ? "Added to liked lessons!" : "Removed like");
   };
 
-  const handleBookmark = async () => {
+  const handleBookmark = () => {
     if (!user) {
       showToast("Please log in to save this lesson");
       return;
     }
 
-    try {
-      const res = await fetch(`/api/videos/${videoId}/bookmark`, { method: "POST" });
-      const data = await res.json();
-      if (res.ok) {
-        setIsSaved(data.saved);
-        showToast(data.saved ? "Saved to your learning list!" : "Removed from saved lessons");
-      }
-    } catch {
-      showToast("Failed to update saved status");
-    }
+    const result = toggleStoredBookmark(videoId, user.id);
+    setIsSaved(result.saved);
+    showToast(result.saved ? "Saved to your learning list!" : "Removed from saved lessons");
   };
 
-  const handleComplete = async () => {
+  const handleComplete = () => {
     if (!user) {
       showToast("Please log in to mark lessons complete");
       return;
     }
 
-    try {
-      const nextState = !isCompleted;
-      const res = await fetch(`/api/videos/${videoId}/progress`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ completed: nextState, progressSeconds: 9999 }),
-      });
-      if (res.ok) {
-        setIsCompleted(nextState);
-        showToast(nextState ? "Lesson marked as completed! 🎓" : "Completion status removed");
-      }
-    } catch {
-      showToast("Failed to update progress");
-    }
+    const nextState = !isCompleted;
+    saveStoredHistory(videoId, user.id, nextState);
+    setIsCompleted(nextState);
+    showToast(nextState ? "Lesson marked as completed! 🎓" : "Completion status removed");
   };
 
   const handleShare = () => {

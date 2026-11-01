@@ -5,6 +5,7 @@ import { useAuth } from "@/components/auth/AuthContext";
 import { Comment } from "@/types";
 import { MessageSquare, Send, Trash2, CornerDownRight, Heart } from "lucide-react";
 import { formatRelativeTime } from "@/lib/formatters";
+import { getStoredComments, addStoredComment, deleteStoredComment } from "@/lib/client-store";
 
 interface WatchCommentsProps {
   videoId: string;
@@ -16,64 +17,38 @@ export default function WatchComments({ videoId }: WatchCommentsProps) {
   const [newText, setNewText] = useState("");
   const [replyToId, setReplyToId] = useState<string | null>(null);
   const [replyText, setReplyText] = useState("");
-  const [submitting, setSubmitting] = useState(false);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function fetchComments() {
-      try {
-        const res = await fetch(`/api/videos/${videoId}/comments`);
-        if (res.ok) {
-          const data = await res.json();
-          setComments(data.comments || []);
-        }
-      } catch (err) {
-        console.error("Failed to load comments", err);
-      } finally {
-        setLoading(false);
-      }
-    }
-    fetchComments();
+    const list = getStoredComments(videoId);
+    setComments(list);
   }, [videoId]);
 
-  const handleSubmit = async (e: React.FormEvent, parentId?: string) => {
+  const handleSubmit = (e: React.FormEvent, parentId?: string) => {
     e.preventDefault();
     const content = parentId ? replyText : newText;
     if (!content.trim() || !user) return;
 
-    setSubmitting(true);
-    try {
-      const res = await fetch(`/api/videos/${videoId}/comments`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ content: content.trim(), parentId }),
-      });
-      if (res.ok) {
-        const data = await res.json();
-        setComments([data.comment, ...comments]);
-        if (parentId) {
-          setReplyToId(null);
-          setReplyText("");
-        } else {
-          setNewText("");
-        }
-      }
-    } catch (e) {
-      console.error("Failed to post comment", e);
-    } finally {
-      setSubmitting(false);
+    const newComment = addStoredComment(
+      videoId,
+      user.id,
+      user.name,
+      user.avatar,
+      content.trim(),
+      parentId
+    );
+
+    setComments([newComment, ...comments]);
+    if (parentId) {
+      setReplyToId(null);
+      setReplyText("");
+    } else {
+      setNewText("");
     }
   };
 
-  const handleDelete = async (commentId: string) => {
-    try {
-      const res = await fetch(`/api/comments/${commentId}`, { method: "DELETE" });
-      if (res.ok) {
-        setComments(comments.filter((c) => c.id !== commentId));
-      }
-    } catch (e) {
-      console.error("Failed to delete comment", e);
-    }
+  const handleDelete = (commentId: string) => {
+    deleteStoredComment(commentId);
+    setComments(comments.filter((c) => c.id !== commentId && c.parentId !== commentId));
   };
 
   // Group top-level comments and replies
@@ -122,11 +97,11 @@ export default function WatchComments({ videoId }: WatchCommentsProps) {
             <div className="flex justify-end">
               <button
                 type="submit"
-                disabled={submitting || !newText.trim()}
+                disabled={!newText.trim()}
                 className="inline-flex items-center bg-[#ff9900] hover:bg-[#e68a00] disabled:opacity-50 text-black text-xs font-bold px-4 py-2 rounded-md transition-colors shadow"
               >
                 <Send size={12} className="mr-1.5" />
-                {submitting ? "Posting..." : "Comment"}
+                Comment
               </button>
             </div>
           </div>
@@ -143,9 +118,7 @@ export default function WatchComments({ videoId }: WatchCommentsProps) {
 
       {/* Comment List */}
       <div className="space-y-4 pt-2">
-        {loading ? (
-          <div className="text-xs text-gray-500 py-4 text-center">Loading discussions...</div>
-        ) : topLevel.length === 0 ? (
+        {topLevel.length === 0 ? (
           <div className="text-xs text-gray-400 text-center py-6">
             No comments yet. Be the first consenting intellectual to discuss this lesson!
           </div>
@@ -232,7 +205,7 @@ export default function WatchComments({ videoId }: WatchCommentsProps) {
                   />
                   <button
                     type="submit"
-                    disabled={submitting || !replyText.trim()}
+                    disabled={!replyText.trim()}
                     className="bg-[#ff9900] text-black font-bold text-xs px-3 py-2 rounded hover:bg-[#e68a00]"
                   >
                     Send

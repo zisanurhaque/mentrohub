@@ -2,12 +2,13 @@
 
 import React, { createContext, useContext, useEffect, useState, useCallback } from "react";
 import { User } from "@/types";
+import { getStoredUser, setStoredUser, demoLogin, customLogin } from "@/lib/client-store";
 
 interface AuthContextType {
   user: User | null;
   loading: boolean;
-  login: (email: string, password: string) => Promise<{ success: boolean; error?: string }>;
-  register: (name: string, email: string, password: string) => Promise<{ success: boolean; error?: string }>;
+  login: (email: string, password?: string) => Promise<{ success: boolean; error?: string }>;
+  register: (name: string, email: string, password?: string) => Promise<{ success: boolean; error?: string }>;
   logout: () => Promise<void>;
   refreshUser: () => Promise<void>;
 }
@@ -26,68 +27,45 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [loading, setLoading] = useState(true);
 
   const refreshUser = useCallback(async () => {
-    try {
-      const res = await fetch("/api/auth/me");
-      if (res.ok) {
-        const data = await res.json();
-        setUser(data.user);
-      } else {
-        setUser(null);
-      }
-    } catch {
-      setUser(null);
-    } finally {
-      setLoading(false);
-    }
+    const stored = getStoredUser();
+    setUser(stored);
+    setLoading(false);
   }, []);
 
   useEffect(() => {
     refreshUser();
   }, [refreshUser]);
 
-  const login = async (email: string, password: string) => {
-    try {
-      const res = await fetch("/api/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
-      const data = await res.json();
-      if (!res.ok) {
-        return { success: false, error: data.error || "Login failed" };
-      }
-      setUser(data.user);
+  const login = async (email: string) => {
+    if (email.toLowerCase().includes("admin")) {
+      const logged = demoLogin("admin");
+      setUser(logged);
       return { success: true };
-    } catch {
-      return { success: false, error: "Network error during login" };
     }
+    const logged = customLogin(email);
+    setUser(logged);
+    return { success: true };
   };
 
-  const register = async (name: string, email: string, password: string) => {
-    try {
-      const res = await fetch("/api/auth/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, password }),
-      });
-      const data = await res.json();
-      if (!res.ok) {
-        return { success: false, error: data.error || "Registration failed" };
-      }
-      setUser(data.user);
-      return { success: true };
-    } catch {
-      return { success: false, error: "Network error during registration" };
-    }
+  const register = async (name: string, email: string) => {
+    const newUser: User = {
+      id: `usr-${Date.now()}`,
+      email,
+      name,
+      role: "student",
+      avatar: `https://api.dicebear.com/7.x/bottts/svg?seed=${encodeURIComponent(name)}`,
+      bio: "Lifelong learner on MentroHub.",
+      createdAt: new Date().toISOString(),
+    };
+    setStoredUser(newUser);
+    setUser(newUser);
+    return { success: true };
   };
 
   const logout = async () => {
-    try {
-      await fetch("/api/auth/logout", { method: "POST" });
-    } finally {
-      setUser(null);
-      window.location.href = "/";
-    }
+    setStoredUser(null);
+    setUser(null);
+    window.location.href = "/";
   };
 
   return (

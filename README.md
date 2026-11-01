@@ -1,12 +1,12 @@
 # MentroHub — The Internet's Most Educational Destination
 
-MentroHub is a humorous educational entertainment platform built with **Next.js 15 (App Router)**, **React 19**, **TypeScript**, **Tailwind CSS**, and **MongoDB**.
+MentroHub is a humorous educational entertainment platform built with **Next.js 15 (App Router)**, **React 19**, **TypeScript**, and **Tailwind CSS**.
 
 The humor comes from the bold contrast:
 - **Visual Presentation**: Inspired by the iconic dark charcoal and warm orange visual language of popular video-sharing platforms.
 - **Educational Content**: 100% legitimate, high-quality educational masterclasses from world-renowned educators like **3Blue1Brown**, **freeCodeCamp**, **Harvard CS50**, **Veritasium**, **Andrej Karpathy**, **StatQuest**, and **Khan Academy**.
 - **Provocative-but-Innocent Marketing Copy**: Headlines like *"Come for the Curiosity. Stay for the Knowledge"*, *"Vectors Get Nasty: Essence of Linear Algebra Explained"*, and *"Your Search History Is About to Get Smarter"*.
-- **Genuinely Useful Learning Platform**: Study notes, watch progress tracking, bookmarks, comments, collections, full-text search, and admin content management.
+- **100% Standalone & Zero Database Setup**: Runs immediately out of the box with zero external backend or MongoDB requirements. Uses rich, verified educational demo data and browser storage for personal progress, bookmarks, notes, and comments!
 
 ---
 
@@ -31,8 +31,7 @@ The humor comes from the bold contrast:
 4. **Curated Collections**:
    - Multi-lesson sequential curricula (e.g., *Learn Python From Scratch*, *Visual Mathematics*, *Full-Stack Web Mastery*, *Deep Neural Networks*, *Financial Freedom*).
 5. **User Accounts & Personalization**:
-   - JWT session authentication via HTTP-only cookies and `jose`.
-   - Passwords securely hashed with `bcryptjs`.
+   - Client session authentication with instant profile management.
    - Personal Learning Dashboard (`/dashboard`) with Watch History, Saved Lessons, and Study Progress.
    - Profile management (`/profile`) with avatar selection and bio.
    - One-click demo login buttons for instant evaluation.
@@ -42,69 +41,37 @@ The humor comes from the bold contrast:
    - Video Management: Add video simply by pasting any YouTube URL; automatically extracts YouTube video ID and high-res thumbnail.
    - Video catalog table with delete and preview actions.
    - Category management to create and manage taxonomy.
-7. **Robust Unified Database Architecture**:
-   - Seamlessly uses **MongoDB** via Mongoose when `MONGODB_URI` is provided.
-   - Automatically falls back to a persistent local JSON store (`.data/db.json`) when `MONGODB_URI` is unset, ensuring zero crashes and full out-of-the-box functionality in any environment!
-8. **SEO & Performance**:
-   - Metadata API, dynamic Open Graph tags, `sitemap.ts`, `robots.ts`, and Server Components.
+7. **SEO & Performance**:
+   - Dynamic XML `sitemap.ts`, `robots.ts`, OpenGraph metadata, and Server Components.
 
 ---
 
-## 🛠️ Prerequisites
+## 🛠️ Prerequisites & Quick Start
 
 - **Node.js**: v18.17+ or v20+
 - **npm** / **yarn** / **pnpm**
-- **MongoDB** *(Optional)*: A MongoDB Atlas connection string or local MongoDB instance. If unset, MentroHub uses its built-in persistent store at `.data/db.json`.
+- **Zero Database Required**: No MongoDB, MySQL, or external backend setup needed!
 
----
+```bash
+# 1. Install dependencies
+npm install
 
-## ⚙️ Installation & Setup
+# 2. Run the development server
+npm run dev
+```
 
-1. **Clone and install dependencies**:
-   ```bash
-   npm install
-   ```
-
-2. **Configure environment variables**:
-   Copy `.env.example` to `.env.local`:
-   ```bash
-   cp .env.example .env.local
-   ```
-
-   Variables:
-   ```env
-   # Optional: MongoDB connection string (Atlas or local)
-   MONGODB_URI=mongodb+srv://<username>:<password>@cluster.mongodb.net/mentrohub
-
-   # JWT secret for sessions (32+ chars in production)
-   AUTH_SECRET=mentrohub-development-session-secret-key-32chars-ok
-
-   # Public Site URL
-   NEXT_PUBLIC_APP_URL=http://localhost:3000
-   ```
-
-3. **Run database seeding**:
-   Populate 25+ verified educational videos, categories, collections, and default accounts:
-   ```bash
-   npm run seed
-   ```
-
-4. **Start the development server**:
-   ```bash
-   npm run dev
-   ```
-   Open [http://localhost:3000](http://localhost:3000) in your browser.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ---
 
 ## 🔑 Default Credentials
 
-For effortless testing, the login screen includes **Instant One-Click Demo Access** buttons:
+The login screen includes **Instant One-Click Demo Access** buttons:
 
 | Role | Email | Password | Access |
 |---|---|---|---|
-| **Admin** | `admin@mentrohub.com` | `admin123456` | Full Admin Console (`/admin`), CMS, Analytics |
-| **Student** | `student@mentrohub.com` | `student123456` | Learning Hub, History, Bookmarks, Notes |
+| **Admin** | `admin@mentrohub.com` | *(any)* | Full Admin Console (`/admin`), CMS, Analytics |
+| **Student** | `student@mentrohub.com` | *(any)* | Learning Hub, History, Bookmarks, Notes |
 
 ---
 
@@ -129,11 +96,8 @@ npm start
 
 ```
 mentrovate/
-├── scripts/
-│   └── seed.mjs                # Database seeder script
 ├── src/
 │   ├── app/
-│   │   ├── api/                # API Route Handlers (auth, videos, comments, notes, admin)
 │   │   ├── admin/              # Admin Dashboard & CMS
 │   │   ├── categories/         # Category Hub & Detail Pages
 │   │   ├── collections/        # Curated Series / Learning Paths
@@ -155,13 +119,11 @@ mentrovate/
 │   │   ├── layout/             # Navbar, Footer, Container, CategoryNav
 │   │   └── watch/              # WatchPlayer, WatchActions, StudyNotes, WatchComments
 │   ├── lib/
-│   │   ├── auth.ts             # JWT session verification & cookie management
-│   │   ├── db.ts               # Unified data store (MongoDB & local fallback)
+│   │   ├── client-store.ts     # Client-side state store (auth, bookmarks, history, notes, comments)
+│   │   ├── db.ts               # In-memory data queries & analytics
 │   │   ├── formatters.ts       # View count & relative time utilities
-│   │   ├── mongodb.ts          # Mongoose connection manager
-│   │   ├── seed-data.ts        # 25+ verified educational video records
+│   │   ├── seed-data.ts        # 26 verified educational video records
 │   │   └── youtube.ts          # YouTube URL extractor & helpers
-│   ├── models/                 # Mongoose schemas (User, Video, Category, Comment, etc.)
 │   └── types/                  # TypeScript interfaces
 └── .env.example
 ```

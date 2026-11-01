@@ -5,7 +5,16 @@ import Link from "next/link";
 import { useAuth } from "@/components/auth/AuthContext";
 import HomepageLayout from "@/components/layout/HomepageLayout";
 import Container from "@/components/layout/Container";
-import { Video, Category, PlatformAnalytics } from "@/types";
+import { Video, Category, PlatformAnalytics, DifficultyLevel } from "@/types";
+import {
+  getPlatformAnalytics,
+  getVideos,
+  getCategories,
+  createVideo,
+  deleteVideo,
+  createCategory,
+} from "@/lib/db";
+import { extractYouTubeId, getYouTubeThumbnail } from "@/lib/youtube";
 import {
   ShieldAlert,
   Video as VideoIcon,
@@ -51,26 +60,17 @@ export default function AdminPage() {
 
   const loadAllAdminData = useCallback(async () => {
     try {
-      const [anRes, vidRes, catRes] = await Promise.all([
-        fetch("/api/admin/analytics"),
-        fetch("/api/videos?limit=100"),
-        fetch("/api/categories"),
+      const [anData, vidData, catData] = await Promise.all([
+        getPlatformAnalytics(),
+        getVideos({ limit: 100 }),
+        getCategories(),
       ]);
 
-      if (anRes.ok) {
-        const d = await anRes.json();
-        setAnalytics(d.analytics);
-      }
-      if (vidRes.ok) {
-        const d = await vidRes.json();
-        setVideos(d.videos || []);
-      }
-      if (catRes.ok) {
-        const d = await catRes.json();
-        setCategories(d.categories || []);
-        if (d.categories?.[0] && !newCategory) {
-          setNewCategory(d.categories[0].name);
-        }
+      setAnalytics(anData);
+      setVideos(vidData.videos || []);
+      setCategories(catData || []);
+      if (catData?.[0] && !newCategory) {
+        setNewCategory(catData[0].name);
       }
     } catch (e) {
       console.error("Admin data load error:", e);
@@ -89,36 +89,42 @@ export default function AdminPage() {
     setSubmitting(true);
 
     try {
-      const res = await fetch("/api/videos", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          title: newTitle,
-          youtubeUrl: newUrl,
-          category: newCategory,
-          instructorName: newInstructor,
-          instructorChannel: newInstructorChannel || newInstructor,
-          difficulty: newDifficulty,
-          duration: newDuration,
-          tags: newTags.split(",").map((t) => t.trim()).filter(Boolean),
-          description: newDescription,
-          featured: newFeatured,
-        }),
+      const youtubeId = extractYouTubeId(newUrl);
+      if (!youtubeId) {
+        setFormMsg({ type: "error", text: "Invalid YouTube URL or ID" });
+        setSubmitting(false);
+        return;
+      }
+
+      await createVideo({
+        title: newTitle,
+        description: newDescription,
+        youtubeId,
+        thumbnailUrl: getYouTubeThumbnail(youtubeId),
+        instructor: {
+          name: newInstructor,
+          channel: newInstructorChannel || newInstructor,
+          verified: true,
+        },
+        category: newCategory,
+        difficulty: newDifficulty as DifficultyLevel,
+        duration: newDuration,
+        durationSeconds: 600,
+        tags: newTags.split(",").map((t) => t.trim()).filter(Boolean),
+        featured: newFeatured,
+        visibility: "public",
+        learningObjectives: [],
+        prerequisites: [],
       });
 
-      const data = await res.json();
-      if (res.ok) {
-        setFormMsg({ type: "success", text: "Educational video added successfully!" });
-        setNewTitle("");
-        setNewUrl("");
-        setNewDescription("");
-        setNewTags("");
-        await loadAllAdminData();
-      } else {
-        setFormMsg({ type: "error", text: data.error || "Failed to add video" });
-      }
+      setFormMsg({ type: "success", text: "Educational video added successfully to library!" });
+      setNewTitle("");
+      setNewUrl("");
+      setNewDescription("");
+      setNewTags("");
+      await loadAllAdminData();
     } catch {
-      setFormMsg({ type: "error", text: "Network error creating video" });
+      setFormMsg({ type: "error", text: "Failed creating video" });
     } finally {
       setSubmitting(false);
     }
@@ -128,12 +134,10 @@ export default function AdminPage() {
     if (!confirm(`Are you sure you want to permanently delete "${title}"?`)) return;
 
     try {
-      const res = await fetch(`/api/videos/${videoId}`, { method: "DELETE" });
-      if (res.ok) {
-        setVideos(videos.filter((v) => v.id !== videoId));
-        if (analytics) {
-          setAnalytics({ ...analytics, totalVideos: analytics.totalVideos - 1 });
-        }
+      await deleteVideo(videoId);
+      setVideos(videos.filter((v) => v.id !== videoId));
+      if (analytics) {
+        setAnalytics({ ...analytics, totalVideos: analytics.totalVideos - 1 });
       }
     } catch (e) {
       console.error("Delete video error:", e);
@@ -145,22 +149,17 @@ export default function AdminPage() {
     if (!catName.trim()) return;
 
     try {
-      const res = await fetch("/api/categories", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: catName.trim(),
-          slug: catSlug.trim() || catName.trim().toLowerCase().replace(/\s+/g, "-"),
-          description: catDesc.trim(),
-        }),
+      await createCategory({
+        name: catName.trim(),
+        slug: catSlug.trim() || catName.trim().toLowerCase().replace(/\s+/g, "-"),
+        description: catDesc.trim(),
+        iconName: "Folder",
       });
 
-      if (res.ok) {
-        setCatName("");
-        setCatSlug("");
-        setCatDesc("");
-        await loadAllAdminData();
-      }
+      setCatName("");
+      setCatSlug("");
+      setCatDesc("");
+      await loadAllAdminData();
     } catch (e) {
       console.error("Add category error", e);
     }

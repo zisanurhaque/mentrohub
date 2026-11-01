@@ -1,4 +1,4 @@
-import { Video, Category, Collection } from "@/types";
+import { Video, Category, Collection, User, Comment } from "@/types";
 
 export const SEED_CATEGORIES: Category[] = [
   {
@@ -868,5 +868,71 @@ export const SEED_COLLECTIONS: Collection[] = [
     thumbnailUrl: "https://i.ytimg.com/vi/3ez10ADR_gM/hqdefault.jpg",
     videoIds: ["vid-fin-02", "vid-fin-01", "vid-fin-03", "vid-fin-04"],
     totalDuration: "49 min",
+  },
+];
+
+
+export const SEED_USERS: User[] = [
+  {
+    id: "usr-admin-01",
+    email: "admin@mentrohub.com",
+    name: "Professor Mentro (Admin)",
+    role: "admin",
+    avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80",
+    bio: "Chief Knowledge Curator at MentroHub. Taking education dangerously seriously.",
+    createdAt: "2024-01-01T00:00:00Z",
+  },
+  {
+    id: "usr-student-01",
+    email: "student@mentrohub.com",
+    name: "Curious Learner",
+    role: "student",
+    avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&auto=format&fit=crop&q=80",
+    bio: "Learning CS, calculus, and finance without regrets.",
+    createdAt: "2024-02-15T00:00:00Z",
+  },
+];
+
+export const SEED_COMMENTS: Comment[] = [
+  {
+    id: "cmt-01",
+    videoId: "vid-math-01",
+    userId: "usr-student-01",
+    userName: "MatrixFanatic",
+    userAvatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&auto=format&fit=crop&q=80",
+    content: "Never thought I'd see vector transformations look this seductive. Grant Sanderson is a national treasure.",
+    likes: 42,
+    createdAt: new Date(Date.now() - 3600000 * 24 * 3).toISOString(),
+  },
+  {
+    id: "cmt-02",
+    videoId: "vid-math-01",
+    userId: "usr-admin-01",
+    userName: "Professor Mentro",
+    userAvatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80",
+    content: "Wait until you see Chapter 3 on matrix multiplication. Pure geometrical ecstasy.",
+    likes: 19,
+    parentId: "cmt-01",
+    createdAt: new Date(Date.now() - 3600000 * 24 * 2).toISOString(),
+  },
+  {
+    id: "cmt-03",
+    videoId: "vid-prog-03",
+    userId: "usr-student-01",
+    userName: "AlgorithmAddict",
+    userAvatar: "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=150&auto=format&fit=crop&q=80",
+    content: "My browser history has never looked this wholesome. 100 CS concepts in 13 minutes is my new pre-workout.",
+    likes: 88,
+    createdAt: new Date(Date.now() - 3600000 * 48).toISOString(),
+  },
+  {
+    id: "cmt-04",
+    videoId: "vid-ai-01",
+    userId: "usr-student-01",
+    userName: "WeightsOptimizer",
+    userAvatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&auto=format&fit=crop&q=80",
+    content: "I clicked because of the provocative title, I stayed for gradient descent backpropagation. No regrets.",
+    likes: 67,
+    createdAt: new Date(Date.now() - 3600000 * 12).toISOString(),
   },
 ];

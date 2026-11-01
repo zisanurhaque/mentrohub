@@ -8,6 +8,8 @@ import HomepageLayout from "@/components/layout/HomepageLayout";
 import Container from "@/components/layout/Container";
 import VideoCard from "@/components/cards/VideoCard";
 import { WatchHistoryItem, BookmarkItem } from "@/types";
+import { SEED_VIDEOS } from "@/lib/seed-data";
+import { getStoredHistory, getStoredBookmarks, clearStoredHistory } from "@/lib/client-store";
 import {
   History,
   Bookmark,
@@ -40,39 +42,24 @@ function DashboardContent() {
   useEffect(() => {
     if (!user) return;
 
-    async function fetchData() {
-      try {
-        const [histRes, bmRes] = await Promise.all([
-          fetch("/api/user/history"),
-          fetch("/api/user/saved"),
-        ]);
+    const storedHist = getStoredHistory().map((h) => ({
+      ...h,
+      video: SEED_VIDEOS.find((v) => v.id === h.videoId),
+    })).filter((h) => !!h.video);
 
-        if (histRes.ok) {
-          const d = await histRes.json();
-          setHistory(d.history || []);
-        }
-        if (bmRes.ok) {
-          const d = await bmRes.json();
-          setBookmarks(d.bookmarks || []);
-        }
-      } catch (err) {
-        console.error("Dashboard fetch error:", err);
-      }
-    }
+    const storedBms = getStoredBookmarks().map((b) => ({
+      ...b,
+      video: SEED_VIDEOS.find((v) => v.id === b.videoId),
+    })).filter((b) => !!b.video);
 
-    fetchData();
+    setHistory(storedHist);
+    setBookmarks(storedBms);
   }, [user]);
 
-  const handleClearHistory = async () => {
+  const handleClearHistory = () => {
     if (!confirm("Are you sure you want to clear your entire watch history?")) return;
-    try {
-      const res = await fetch("/api/user/history", { method: "DELETE" });
-      if (res.ok) {
-        setHistory([]);
-      }
-    } catch (err) {
-      console.error("Clear history error:", err);
-    }
+    clearStoredHistory();
+    setHistory([]);
   };
 
   if (authLoading) {

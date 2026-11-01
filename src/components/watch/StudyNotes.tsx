@@ -5,6 +5,7 @@ import { useAuth } from "@/components/auth/AuthContext";
 import { StudyNote } from "@/types";
 import { BookOpen, Plus, Trash2, Clock } from "lucide-react";
 import { formatRelativeTime } from "@/lib/formatters";
+import { getStoredNotes, addStoredNote, deleteStoredNote } from "@/lib/client-store";
 
 interface StudyNotesProps {
   videoId: string;
@@ -14,67 +15,28 @@ export default function StudyNotes({ videoId }: StudyNotesProps) {
   const { user } = useAuth();
   const [notes, setNotes] = useState<StudyNote[]>([]);
   const [content, setContent] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
     if (!user) {
       setNotes([]);
       return;
     }
-
-    async function loadNotes() {
-      setLoading(true);
-      try {
-        const res = await fetch(`/api/videos/${videoId}/notes`);
-        if (res.ok) {
-          const data = await res.json();
-          setNotes(data.notes || []);
-        }
-      } catch (e) {
-        console.error("Failed to load notes", e);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    loadNotes();
+    const currentNotes = getStoredNotes(videoId);
+    setNotes(currentNotes);
   }, [videoId, user]);
 
-  const handleAddNote = async (e: React.FormEvent) => {
+  const handleAddNote = (e: React.FormEvent) => {
     e.preventDefault();
     if (!content.trim() || !user) return;
 
-    setSubmitting(true);
-    try {
-      const res = await fetch(`/api/videos/${videoId}/notes`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ content: content.trim() }),
-      });
-      if (res.ok) {
-        const data = await res.json();
-        setNotes([data.note, ...notes]);
-        setContent("");
-      }
-    } catch (e) {
-      console.error("Failed to add note", e);
-    } finally {
-      setSubmitting(false);
-    }
+    const newNote = addStoredNote(videoId, user.id, content.trim());
+    setNotes([newNote, ...notes]);
+    setContent("");
   };
 
-  const handleDeleteNote = async (noteId: string) => {
-    try {
-      const res = await fetch(`/api/videos/${videoId}/notes?noteId=${noteId}`, {
-        method: "DELETE",
-      });
-      if (res.ok) {
-        setNotes(notes.filter((n) => n.id !== noteId));
-      }
-    } catch (e) {
-      console.error("Failed to delete note", e);
-    }
+  const handleDeleteNote = (noteId: string) => {
+    deleteStoredNote(noteId);
+    setNotes(notes.filter((n) => n.id !== noteId));
   };
 
   return (
@@ -85,7 +47,7 @@ export default function StudyNotes({ videoId }: StudyNotesProps) {
           My Personal Study Notes ({notes.length})
         </h4>
         <span className="text-[11px] text-gray-400">
-          Private to your account
+          Private to your browser
         </span>
       </div>
 
@@ -110,18 +72,16 @@ export default function StudyNotes({ videoId }: StudyNotesProps) {
             <div className="flex justify-end">
               <button
                 type="submit"
-                disabled={submitting || !content.trim()}
+                disabled={!content.trim()}
                 className="inline-flex items-center bg-[#ff9900] hover:bg-[#e68a00] disabled:opacity-50 text-black text-xs font-bold px-3 py-1.5 rounded transition-colors"
               >
                 <Plus size={14} className="mr-1" />
-                {submitting ? "Saving..." : "Save Note"}
+                Save Note
               </button>
             </div>
           </form>
 
-          {loading ? (
-            <div className="text-xs text-gray-500 py-2">Loading notes...</div>
-          ) : notes.length === 0 ? (
+          {notes.length === 0 ? (
             <div className="text-xs text-gray-500 text-center py-3">
               No notes taken yet. Use this section to capture insights!
             </div>

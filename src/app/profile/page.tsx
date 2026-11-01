@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useAuth } from "@/components/auth/AuthContext";
+import { setStoredUser } from "@/lib/client-store";
 import HomepageLayout from "@/components/layout/HomepageLayout";
 import Container from "@/components/layout/Container";
 import { User as UserIcon, Save, ArrowLeft, CheckCircle2 } from "lucide-react";
@@ -34,20 +35,21 @@ export default function ProfilePage() {
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!user) return;
     setSaving(true);
     setSaved(false);
 
     try {
-      const res = await fetch("/api/auth/me", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, bio, avatar }),
-      });
-      if (res.ok) {
-        await refreshUser();
-        setSaved(true);
-        setTimeout(() => setSaved(false), 3000);
-      }
+      const updatedUser = {
+        ...user,
+        name,
+        bio,
+        avatar,
+      };
+      setStoredUser(updatedUser);
+      await refreshUser();
+      setSaved(true);
+      setTimeout(() => setSaved(false), 3000);
     } catch (e) {
       console.error("Save profile error", e);
     } finally {
