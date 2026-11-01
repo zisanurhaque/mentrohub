@@ -45,7 +45,7 @@ export default async function HomePage() {
                 <Flame size={18} className="fill-[#ff9900]" />
               </span>
               <div>
-                <h2 className="text-xl sm:text-2xl font-black text-white tracking-tight flex items-center">
+                <h2 className="text-xl sm:text-2xl font-semibold text-white tracking-tight flex items-center">
                   Trending Lessons
                 </h2>
                 <p className="text-xs text-gray-400">
@@ -56,7 +56,7 @@ export default async function HomePage() {
 
             <Link
               href="/search?sortBy=views"
-              className="text-xs font-bold text-[#ff9900] hover:text-[#e68a00] flex items-center group"
+              className="text-xs font-medium text-[#ff9900] hover:text-[#e68a00] flex items-center group"
             >
               View all <ArrowRight size={13} className="ml-1 group-hover:translate-x-0.5 transition-transform" />
             </Link>
@@ -95,7 +95,7 @@ export default async function HomePage() {
                 <FolderTree size={18} />
               </span>
               <div>
-                <h2 className="text-xl sm:text-2xl font-black text-white tracking-tight">
+                <h2 className="text-xl sm:text-2xl font-semibold text-white tracking-tight">
                   Popular Categories
                 </h2>
                 <p className="text-xs text-gray-400">
@@ -106,7 +106,7 @@ export default async function HomePage() {
 
             <Link
               href="/categories"
-              className="text-xs font-bold text-[#ff9900] hover:text-[#e68a00] flex items-center group"
+              className="text-xs font-medium text-[#ff9900] hover:text-[#e68a00] flex items-center group"
             >
               All disciplines <ArrowRight size={13} className="ml-1 group-hover:translate-x-0.5 transition-transform" />
             </Link>
@@ -127,7 +127,7 @@ export default async function HomePage() {
                 <Eye size={18} />
               </span>
               <div>
-                <h2 className="text-xl sm:text-2xl font-black text-white tracking-tight">
+                <h2 className="text-xl sm:text-2xl font-semibold text-white tracking-tight">
                   Most Watched Knowledge
                 </h2>
                 <p className="text-xs text-gray-400">
@@ -138,7 +138,7 @@ export default async function HomePage() {
 
             <Link
               href="/search?sortBy=views"
-              className="text-xs font-bold text-[#ff9900] hover:text-[#e68a00] flex items-center group"
+              className="text-xs font-medium text-[#ff9900] hover:text-[#e68a00] flex items-center group"
             >
               See leaderboard <ArrowRight size={13} className="ml-1 group-hover:translate-x-0.5 transition-transform" />
             </Link>
@@ -159,7 +159,7 @@ export default async function HomePage() {
                 <Layers size={18} />
               </span>
               <div>
-                <h2 className="text-xl sm:text-2xl font-black text-white tracking-tight">
+                <h2 className="text-xl sm:text-2xl font-semibold text-white tracking-tight">
                   Curated Collections
                 </h2>
                 <p className="text-xs text-gray-400">
@@ -170,7 +170,7 @@ export default async function HomePage() {
 
             <Link
               href="/collections"
-              className="text-xs font-bold text-[#ff9900] hover:text-[#e68a00] flex items-center group"
+              className="text-xs font-medium text-[#ff9900] hover:text-[#e68a00] flex items-center group"
             >
               All tracks <ArrowRight size={13} className="ml-1 group-hover:translate-x-0.5 transition-transform" />
             </Link>
@@ -191,7 +191,7 @@ export default async function HomePage() {
                 <Sparkles size={18} />
               </span>
               <div>
-                <h2 className="text-xl sm:text-2xl font-black text-white tracking-tight">
+                <h2 className="text-xl sm:text-2xl font-semibold text-white tracking-tight">
                   Freshly Uploaded Brain Food
                 </h2>
                 <p className="text-xs text-gray-400">
@@ -202,7 +202,7 @@ export default async function HomePage() {
 
             <Link
               href="/search?sortBy=newest"
-              className="text-xs font-bold text-[#ff9900] hover:text-[#e68a00] flex items-center group"
+              className="text-xs font-medium text-[#ff9900] hover:text-[#e68a00] flex items-center group"
             >
               Latest uploads <ArrowRight size={13} className="ml-1 group-hover:translate-x-0.5 transition-transform" />
             </Link>

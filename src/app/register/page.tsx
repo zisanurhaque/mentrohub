@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "@/components/auth/AuthContext";
 import HomepageLayout from "@/components/layout/HomepageLayout";
 import Container from "@/components/layout/Container";
+import BrandLogo from "@/components/common/BrandLogo";
 import { UserPlus, AlertCircle, ShieldCheck } from "lucide-react";
 
 export default function RegisterPage() {
@@ -41,14 +42,9 @@ export default function RegisterPage() {
     <HomepageLayout>
       <Container className="py-12 sm:py-16">
         <div className="max-w-md mx-auto bg-[#141418] border border-[#252530] rounded-xl p-6 sm:p-8 space-y-6 shadow-2xl">
-          <div className="text-center space-y-2">
-            <Link href="/" className="inline-flex items-center">
-              <span className="text-2xl font-black text-white">Mentro</span>
-              <span className="bg-[#ff9900] text-black font-black text-base px-2 py-0.5 rounded ml-1 tracking-wider uppercase">
-                HUB
-              </span>
-            </Link>
-            <h1 className="text-xl font-bold text-white">
+          <div className="text-center space-y-3">
+            <BrandLogo size="lg" />
+            <h1 className="text-xl font-semibold text-white">
               Join MentroHub Free
             </h1>
             <p className="text-xs text-gray-400">

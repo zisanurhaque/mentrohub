@@ -96,7 +96,7 @@ export default async function WatchPage({ params }: Props) {
                   </span>
                 </div>
 
-                <h1 className="text-xl sm:text-2xl md:text-3xl font-black text-white tracking-tight leading-tight">
+                <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white tracking-tight leading-tight">
                   {video.title}
                 </h1>
               </div>
@@ -147,7 +147,7 @@ export default async function WatchPage({ params }: Props) {
 
                 <button
                   type="button"
-                  className="px-3.5 py-1.5 bg-[#ff9900] hover:bg-[#e68a00] text-black text-xs font-black rounded-sm transition-colors shadow-sm uppercase tracking-wider"
+                  className="px-3.5 py-1.5 bg-[#ff9900] hover:bg-[#e68a00] text-black text-xs font-semibold rounded-sm transition-colors shadow-sm uppercase tracking-wider"
                 >
                   Follow Channel
                 </button>

@@ -4,6 +4,7 @@ import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useAuth } from "@/components/auth/AuthContext";
+import BrandLogo from "@/components/common/BrandLogo";
 import {
   Menu,
   X,
@@ -165,15 +166,8 @@ export default function Navbar() {
                 <ChevronDown size={12} className="text-gray-400" />
               </Link>
 
-              {/* Iconic Logo: White Text + Warm Orange Box Badge */}
-              <Link href="/" className="flex items-center group">
-                <span className="text-2xl sm:text-3xl font-black tracking-tighter text-white">
-                  Mentro
-                </span>
-                <span className="bg-[#ff9900] text-black font-black text-sm sm:text-base px-2 py-0.5 rounded-sm ml-1 tracking-tight uppercase shadow-sm">
-                  HUB
-                </span>
-              </Link>
+              {/* Refined Brand Logo Wordmark */}
+              <BrandLogo size="md" />
             </div>
 
             {/* Center: Wide Dark Pill Search Bar */}
@@ -222,7 +216,7 @@ export default function Navbar() {
               <button
                 type="button"
                 onClick={() => setAiModalOpen(true)}
-                className="bg-[#ff9900] hover:bg-[#e68a00] text-black font-black text-xs px-3 sm:px-3.5 py-1.5 rounded-full flex items-center space-x-1 shadow transition-colors"
+                className="bg-[#ff9900] hover:bg-[#e68a00] text-black font-semibold text-xs px-3 sm:px-3.5 py-1.5 rounded-full flex items-center space-x-1 shadow transition-colors"
                 title="Open AI Tutor"
               >
                 <span>AI TUTOR</span>
@@ -360,7 +354,7 @@ export default function Navbar() {
         {/* 3. Secondary Category Navigation Bar (Exact Match to Screenshot 2 Under Header) */}
         <div className="bg-[#08080a] border-t border-[#18181f] border-b border-[#141418] overflow-x-auto no-scrollbar">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <nav className="flex items-center space-x-5 text-xs font-bold tracking-tight uppercase whitespace-nowrap">
+            <nav className="flex items-center space-x-5 text-xs font-medium tracking-normal uppercase whitespace-nowrap">
               {/* HOME TAB with orange bottom line */}
               <Link
                 href="/"
@@ -456,7 +450,7 @@ export default function Navbar() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-center justify-between gap-3 overflow-hidden">
               {/* Title with Globe Icon */}
-              <div className="flex items-center space-x-1.5 text-white font-black text-xs sm:text-sm shrink-0 tracking-tight">
+              <div className="flex items-center space-x-1.5 text-white font-semibold text-xs sm:text-sm shrink-0 tracking-tight">
                 <span>Hot Educational Videos</span>
                 <span className="text-[#38bdf8] text-xs">🌐</span>
               </div>
@@ -492,7 +486,7 @@ export default function Navbar() {
               />
             </form>
 
-            <div className="grid grid-cols-2 gap-2 text-xs font-bold pt-1">
+            <div className="grid grid-cols-2 gap-2 text-xs font-medium pt-1">
               <Link
                 href="/"
                 onClick={() => setMobileMenuOpen(false)}

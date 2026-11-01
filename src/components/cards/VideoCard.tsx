@@ -164,7 +164,7 @@ export default function VideoCard({ video }: VideoCardProps) {
         <div className="flex items-start justify-between gap-1 relative">
           <Link href={`/watch/${video.id}`} className="block flex-1 min-w-0">
             <h3
-              className="text-xs sm:text-[13px] font-bold text-[#e2e2e8] group-hover:text-[#ff9900] line-clamp-2 leading-tight transition-colors"
+              className="text-xs sm:text-[13px] font-medium text-[#e8e8ee] group-hover:text-[#ff9900] line-clamp-2 leading-snug transition-colors"
               title={video.title}
             >
               {video.title}
